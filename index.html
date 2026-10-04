@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardian AI | Car Safety Alert</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Specific Landing Page Styles */
+        .hero {
+            padding: 100px 20px;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; color: #ffd400; }
+        .hero p { font-size: 1.2rem; max-width: 800px; margin: 0 auto 30px; }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: rgba(33, 23, 2, 0.94);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+        .feature-card:hover { transform: translateY(-10px); }
+        .feature-card i { font-size: 2.5rem; color: #ffd400; margin-bottom: 20px; }
+        footer {
+            padding: 40px;
+            background: #110b00;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><i class="fas fa-shield-alt"></i> GUARDIAN <span>AI</span></div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="protocol.html">Safety Protocol</a>
+            <a href="collision-demo.html">Interactive Demo</a>
+            <a href="dashboard.html" class="btn-primary">Driver Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Smart Safety for Every Mile</h1>
+            <p>Guardian AI uses advanced computer vision and real-time sensor fusion to protect you from collisions before they happen.</p>
+            <div class="hero-btns">
+                <a href="dashboard.html" class="button primary">Launch Dashboard</a>
+                <a href="collision-demo.html" class="button secondary">Try Gesture Demo</a>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-eye"></i>
+                <h3>Proximity Intelligence</h3>
+                <p>Advanced LIDAR-mimicking vision systems detect obstacles with millisecond precision.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-brain"></i>
+                <h3>Predictive Analysis</h3>
+                <p>Our AI doesn't just see; it predicts potential hazards based on driver behavior and road conditions.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-Hospital"></i>
+                <h3>Emergency Integration</h3>
+                <p>Instantly connects with nearby healthcare providers in the event of a critical system alert.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo">GUARDIAN <span>AI</span></div>
+            <p>&copy; 2024 Guardian AI Systems. All rights reserved.</p>
+        </div>
+    </footer>
+</script>
+</body>
+</html>

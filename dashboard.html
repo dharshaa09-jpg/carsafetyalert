@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardian AI | Driver Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="navbar">GUARDIAN <span>AI</span></div>
+    <div class="container">
+        <div class="nav-links" style="grid-column: 1 / -1;">
+            <a href="index.html">Home</a>
+            <a href="protocol.html">Safety Protocol</a>
+            <a href="collision-demo.html">Demo</a>
+        </div>
+
+        <div id="left-section">
+            <div id="login-section" class="card">
+                <h3>Driver Login</h3>
+                <form id="driverLoginForm">
+                    <input type="text" id="loginName" placeholder="Driver Full Name" required style="width: calc(100% - 20px);"><br>
+                    <input type="text" id="loginModel" placeholder="Car Model (e.g. Tesla Model 3)" required><br>
+                    <input type="text" id="loginDetails" placeholder="Car Number / Registration Details" required><br>
+                    <button type="submit" class="button">Login to Dashboard</button>
+                </form>
+            </div>
+            <div id="success-msg" class="hidden">
+                <h2 style="color: #4ade80;">Successfully Logged In!</h2>
+                <p>Loading your driver profile...</p>
+            </div>
+            <div id="dashboard-section" class="hidden">
+                <div class="card">
+                    <h3>Driver Profile</h3>
+                    <p><b>Name:</b> <span id="driverDisplay"></span></p>
+                    <p><b>Car Model:</b> <span id="modelDisplay"></span></p>
+                    <p><b>Registration:</b> <span id="detailsDisplay"></span></p>
+                </div>
+                <div class="card">
+                    <h3>System Health</h3>
+                    <p>Status: <span class="status">Online</span></p>
+                    <p>Alert System: <span class="status">Ready</span></p>
+                    <button id="goToMonitoring" class="button">Go to Live Monitoring</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="right-section">
+            <div class="card">
+                <h3>About This App</h3>
+                <ul class="app-details-list">
+                    <li><strong>Real-time Monitoring:</strong> Our AI-driven system analyzes your vehicle's environment using high-definition camera feeds and sensor telemetry.</li>
+                    <li><strong>Collision Warning:</strong> Advanced algorithms detect potential impacts and alert the driver within milliseconds.</li>
+                    <li><strong>Smart Diagnostics:</strong> Continually checks brake response, tire pressure, and engine temperature to ensure maximum safety.</li>
+                    <li><strong>Driver Focused:</strong> Designed to reduce cognitive load by presenting only critical alerts when they matter most.</li>
+                </ul>
+                <p style="font-size: 0.85rem; color: #ffd400;">* Ensure your camera is properly mounted for optimal tracking performance.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        const loginForm = document.getElementById('driverLoginForm');
+        const loginSection = document.getElementById('login-section');
+        const successMsg = document.getElementById('success-msg');
+        const dashboardSection = document.getElementById('dashboard-section');
+        const goToMonitoringBtn = document.getElementById('goToMonitoring');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('loginName').value;
+            const model = document.getElementById('loginModel').value;
+            const details = document.getElementById('loginDetails').value;
+
+            localStorage.setItem('driverName', name);
+            localStorage.setItem('carModel', model);
+            localStorage.setItem('carDetails', details);
+
+            document.getElementById('driverDisplay').innerText = name;
+            document.getElementById('modelDisplay').innerText = model;
+            document.getElementById('detailsDisplay').innerText = details;
+
+            loginSection.classList.add('hidden');
+            successMsg.classList.remove('hidden');
+
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+                dashboardSection.classList.remove('hidden');
+            }, 1500);
+        });
+
+        goToMonitoringBtn.addEventListener('click', () => {
+            window.location.href = 'monitoring.html';
+        });
+    </script>
+</body>
+</html>
