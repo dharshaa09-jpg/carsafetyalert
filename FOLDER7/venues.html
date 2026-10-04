@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Venues | PremiumVilla</title>
+  <style>
+    :root {
+      --black: #050505;
+      --charcoal: #10100f;
+      --panel: #171410;
+      --gold: #d8a945;
+      --gold-light: #f4d78a;
+      --line: #3a2f1b;
+      --text: #fff8e8;
+      --muted: #c7b68f;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--black);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .back-link {
+      color: var(--gold-light);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: var(--gold-light);
+      margin-top: 0;
+    }
+
+    .venue-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .venue-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .venue-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--gold);
+    }
+
+    .venue-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .venue-card-content {
+      padding: 20px;
+    }
+
+    .venue-card h3 {
+      color: var(--gold-light);
+      margin: 0 0 10px;
+      font-size: 1.4rem;
+    }
+
+    .venue-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .btn-view {
+      display: inline-block;
+      margin-top: 15px;
+      color: var(--gold);
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Our Venues</h1>
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </header>
+
+  <div class="venue-grid">
+    <a href="details.html?type=banquet" class="venue-card">
+      <img src="https://images.unsplash.com/photo-1519167758481-83f29c8cf8ea?auto=format&fit=crop&w=1000&q=85" alt="Banquet Hall">
+      <div class="venue-card-content">
+        <h3>Banquet Hall</h3>
+        <p>Opulent spaces for grand celebrations and corporate events.</p>
+        <span class="btn-view">Explore Details</span>
+      </div>
+    </a>
+
+    <a href="details.html?type=resort" class="venue-card">
+      <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1000&q=85" alt="Resort">
+      <div class="venue-card-content">
+        <h3>Resort</h3>
+        <p>Luxurious tropical escapes with world-class amenities.</p>
+        <span class="btn-view">Explore Details</span>
+      </div>
+    </a>
+
+    <a href="details.html?type=villa" class="venue-card">
+      <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1000&q=85" alt="Villa">
+      <div class="venue-card-content">
+        <h3>Villa</h3>
+        <p>Private sanctuaries offering ultimate luxury and seclusion.</p>
+        <span class="btn-view">Explore Details</span>
+      </div>
+    </a>
+
+    <a href="details.html?type=hotel" class="venue-card">
+      <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=85" alt="Hotel">
+      <div class="venue-card-content">
+        <h3>Hotel</h3>
+        <p>Elegant suites and refined comfort for the discerning traveler.</p>
+        <span class="btn-view">Explore Details</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+</body>
+</html>

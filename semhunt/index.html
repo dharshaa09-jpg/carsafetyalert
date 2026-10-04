@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semhunt | Previous Semester Papers</title>
+  <style>
+    :root {
+      --black: #090909;
+      --panel: #15120f;
+      --panel-soft: #201912;
+      --orange: #ff7900;
+      --orange-soft: #ffad4f;
+      --line: #3a2a1d;
+      --text: #fff8ef;
+      --muted: #cdb9a4;
+      --paper: #fff5e7;
+      --ink: #21170f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--black);
+      color: var(--text);
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .shell {
+      min-height: 100vh;
+      background:
+        linear-gradient(135deg, rgba(255, 121, 0, 0.18), transparent 32%),
+        radial-gradient(circle at 85% 8%, rgba(255, 173, 79, 0.14), transparent 24%),
+        var(--black);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px clamp(18px, 5vw, 72px);
+      border-bottom: 1px solid rgba(255, 121, 0, 0.24);
+      background: rgba(9, 9, 9, 0.78);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      color: var(--black);
+      background: var(--orange);
+      font-weight: 900;
+      box-shadow: 0 0 0 4px rgba(255, 121, 0, 0.16);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      letter-spacing: 0;
+    }
+
+    .brand span {
+      color: var(--orange-soft);
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      padding: 9px 12px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+    }
+
+    nav a:hover {
+      border-color: rgba(255, 121, 0, 0.5);
+      color: var(--orange-soft);
+    }
+
+    main {
+      padding: 34px clamp(18px, 5vw, 72px) 60px;
+    }
+
+    .finder {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(300px, 1.1fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 22px;
+      min-height: 420px;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 121, 0, 0.46);
+      border-radius: 999px;
+      color: var(--orange-soft);
+      background: rgba(255, 121, 0, 0.08);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .intro h2 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(2.55rem, 7vw, 5.4rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .intro p {
+      margin: 0;
+      max-width: 620px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.18rem);
+      line-height: 1.6;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 620px;
+    }
+
+    .stat {
+      border-left: 3px solid var(--orange);
+      background: rgba(255, 255, 255, 0.035);
+      padding: 13px 14px;
+      min-height: 78px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.55rem;
+      color: var(--orange-soft);
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .search-panel {
+      background: linear-gradient(180deg, var(--panel), #100e0c);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: clamp(18px, 3vw, 28px);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .panel-title h3 {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+
+    .badge {
+      color: var(--black);
+      background: var(--orange);
+      font-weight: 800;
+      padding: 7px 9px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    select,
+    input {
+      width: 100%;
+      border: 1px solid #4b3522;
+      background: #0c0b0a;
+      color: var(--text);
+      border-radius: 6px;
+      padding: 12px 13px;
+      outline: none;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255, 121, 0, 0.18);
+    }
+
+    .paper-list {
+      display: grid;
+      gap: 12px;
+      max-height: 445px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .paper-card {
+      display: grid;
+      gap: 10px;
+      padding: 15px;
+      border: 1px solid #3a2a1d;
+      border-radius: 8px;
+      background: #110f0d;
+    }
+
+    .paper-card:hover {
+      border-color: rgba(255, 121, 0, 0.72);
+    }
+
+    .paper-card h4 {
+      margin: 0;
+      color: var(--text);
+      font-size: 1.05rem;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .chip {
+      border: 1px solid #4b3522;
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: rgba(255, 121, 0, 0.07);
+    }
+
+    .actions {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 6px;
+      padding: 10px 13px;
+      font-weight: 800;
+    }
+
+    .btn.primary {
+      color: var(--black);
+      background: var(--orange);
+    }
+
+    .btn.secondary {
+      color: var(--orange-soft);
+      background: transparent;
+      border: 1px solid #5f3c1f;
+    }
+
+    section {
+      margin-top: 50px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 4vw, 2.7rem);
+    }
+
+    .section-head p {
+      margin: 0;
+      max-width: 600px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .department-layout {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .dept-band {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .dept-band h3 {
+      margin: 0;
+      padding: 16px 18px;
+      background: var(--orange);
+      color: var(--black);
+      font-size: 1.2rem;
+    }
+
+    .dept-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line);
+    }
+
+    .dept-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 13px;
+      background: #120f0d;
+      color: var(--text);
+      cursor: pointer;
+      border: 0;
+      text-align: left;
+      min-height: 52px;
+    }
+
+    .dept-item:hover {
+      color: var(--orange-soft);
+      background: #1d1712;
+    }
+
+    .dept-item span:last-child {
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .universities {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .university {
+      min-height: 118px;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: linear-gradient(150deg, #17120f, #0f0d0b);
+    }
+
+    .university strong {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--orange-soft);
+    }
+
+    .university span {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.94rem;
+    }
+
+    dialog {
+      width: min(760px, calc(100% - 26px));
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 0;
+    }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.76);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px;
+      background: var(--orange);
+      color: var(--black);
+    }
+
+    .modal-head h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .close {
+      border: 0;
+      border-radius: 5px;
+      background: var(--black);
+      color: var(--text);
+      padding: 8px 11px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .question-paper {
+      padding: 22px;
+    }
+
+    .question-paper h4 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .question-paper ol {
+      margin: 14px 0 0;
+      padding-left: 22px;
+      line-height: 1.65;
+    }
+
+    .empty {
+      padding: 28px;
+      border: 1px dashed #6c4928;
+      border-radius: 8px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .sample-paper {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(280px, 1.2fr);
+      gap: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--panel), #0f0d0b);
+      overflow: hidden;
+    }
+
+    .sample-paper aside {
+      padding: 22px;
+      background: var(--orange);
+      color: var(--black);
+    }
+
+    .sample-paper aside h3 {
+      margin: 0 0 14px;
+      font-size: 1.45rem;
+    }
+
+    .sample-paper aside p {
+      margin: 0;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    .sample-sheet {
+      padding: 22px;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 560px;
+    }
+
+    .exam-paper {
+      border: 2px solid #2b2118;
+      background: #fffaf0;
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .exam-header {
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 2px solid #2b2118;
+    }
+
+    .college-logo {
+      display: grid;
+      place-items: center;
+      width: 70px;
+      height: 70px;
+      border: 3px solid #2b2118;
+      border-radius: 50%;
+      color: #2b2118;
+      background: #ffcf91;
+      font-size: 1.35rem;
+      font-weight: 900;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .exam-header h3,
+    .exam-header p {
+      margin: 0;
+      text-align: center;
+    }
+
+    .exam-header h3 {
+      font-size: clamp(1.15rem, 3vw, 1.45rem);
+      text-transform: uppercase;
+    }
+
+    .exam-header p {
+      margin-top: 5px;
+      color: #493522;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .exam-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 18px;
+      margin: 16px 0;
+      color: #2b2118;
+      font-weight: 700;
+    }
+
+    .exam-title {
+      margin: 0 0 14px;
+      text-align: center;
+      font-size: 1.12rem;
+      text-transform: uppercase;
+      text-decoration: underline;
+    }
+
+    .exam-instructions {
+      margin: 0 0 14px;
+      padding: 10px 12px;
+      border: 1px solid #b9854d;
+      background: #fff2dc;
+      color: #493522;
+      line-height: 1.5;
+    }
+
+    .exam-section {
+      margin-top: 14px;
+    }
+
+    .exam-section h4 {
+      margin: 0 0 8px;
+      padding: 8px;
+      background: #2b2118;
+      color: #fffaf0;
+      text-align: center;
+      font-size: 0.98rem;
+    }
+
+    .exam-section ol {
+      margin: 0;
+      padding-left: 22px;
+      line-height: 1.65;
+    }
+
+    .exam-section li {
+      margin-bottom: 8px;
+    }
+
+    .marks {
+      float: right;
+      font-weight: 800;
+      color: #7b3c00;
+      margin-left: 12px;
+    }
+
+    footer {
+      margin-top: 54px;
+      padding: 22px 0 0;
+      color: var(--muted);
+      border-top: 1px solid rgba(255, 121, 0, 0.22);
+    }
+
+    @media (max-width: 920px) {
+      header,
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      nav {
+        justify-content: flex-start;
+      }
+
+      .finder,
+      .department-layout,
+      .sample-paper,
+      .universities {
+        grid-template-columns: 1fr;
+      }
+
+      .intro {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 620px) {
+      main {
+        padding-top: 24px;
+      }
+
+      .filters,
+      .stats,
+      .dept-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel-title {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .exam-header,
+      .exam-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .college-logo {
+        margin: 0 auto;
+      }
+
+      .paper-list {
+        max-height: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="brand" aria-label="Semhunt">
+        <div class="brand-mark">S</div>
+        <h1>Sem<span>hunt</span></h1>
+      </div>
+      <nav aria-label="Main navigation">
+        <a href="#papers">Papers</a>
+        <a href="#departments">Departments</a>
+        <a href="#universities">Universities</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="finder" id="papers" aria-labelledby="finder-title">
+        <div class="intro">
+          <div class="eyebrow">Previous semester question papers</div>
+          <h2 id="finder-title">Find university sem papers fast.</h2>
+          <p>Semhunt organizes previous semester papers by university, stream, department, semester, subject, and year for arts and science students.</p>
+          <div class="stats" aria-label="Semhunt collection highlights">
+            <div class="stat">
+              <strong>16+</strong>
+              <span>Departments listed</span>
+            </div>
+            <div class="stat">
+              <strong>8</strong>
+              <span>Universities covered</span>
+            </div>
+            <div class="stat">
+              <strong>7</strong>
+              <span>Subject papers ready</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="search-panel">
+          <div class="panel-title">
+            <h3>Paper Finder</h3>
+            <span class="badge" id="resultCount">3 papers</span>
+          </div>
+
+          <div class="filters">
+            <label>
+              University
+              <select id="universityFilter">
+                <option value="all">All universities</option>
+              </select>
+            </label>
+            <label>
+              Stream
+              <select id="streamFilter">
+                <option value="all">Arts and Science</option>
+                <option value="Arts">Arts</option>
+                <option value="Science">Science</option>
+              </select>
+            </label>
+            <label>
+              Department
+              <select id="departmentFilter">
+                <option value="all">All departments</option>
+              </select>
+            </label>
+            <label>
+              Search
+              <input id="searchInput" type="search" placeholder="Subject, code, year...">
+            </label>
+          </div>
+
+          <div class="paper-list" id="paperList" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="departments" aria-labelledby="departments-title">
+        <div class="section-head">
+          <h2 id="departments-title">Departments</h2>
+          <p>Choose BCA, B.Tech, BBA, CSE, or any other arts and science department to filter the paper finder.</p>
+        </div>
+        <div class="department-layout" id="departmentLayout"></div>
+      </section>
+
+      <section id="sample" aria-labelledby="sample-title">
+        <div class="section-head">
+          <h2 id="sample-title">Sample Question Paper</h2>
+          <p>A visible sample paper format for Semhunt students. Use the paper finder to open separate 100-mark question papers for each subject.</p>
+        </div>
+        <div class="sample-paper">
+          <aside>
+            <h3>CSE / B.Tech</h3>
+            <p>University: Anna University<br>Department: CSE<br>Semester: 4<br>Subject: Database Management Systems<br>Year: 2025</p>
+          </aside>
+          <div class="sample-sheet">
+            <article class="exam-paper" aria-label="Sample 100 marks question paper">
+              <div class="exam-header">
+                <div class="college-logo">SC</div>
+                <div>
+                  <h3>R.K. College of Arts and Science</h3>
+                  <p>Department of Computer Science and Engineering<br>End Semester Examination - April 2026</p>
+                </div>
+              </div>
+
+              <div class="exam-meta">
+                <span>Register No: __________________</span>
+                <span>Course Code: CS3452</span>
+                <span>Degree: B.Tech / CSE</span>
+                <span>Maximum Marks: 100</span>
+                <span>Semester: IV</span>
+                <span>Time: 3 Hours</span>
+              </div>
+
+              <h3 class="exam-title">Database Management Systems</h3>
+              <p class="exam-instructions"><strong>Instructions:</strong> Answer all questions in Part A. Answer any five questions from Part B. Draw neat diagrams wherever necessary.</p>
+
+              <div class="exam-section">
+                <h4>Part A - Answer All Questions (10 x 2 = 20 Marks)</h4>
+                <ol>
+                  <li>Define DBMS. <span class="marks">2</span></li>
+                  <li>What is a primary key? <span class="marks">2</span></li>
+                  <li>List any two advantages of normalization. <span class="marks">2</span></li>
+                  <li>Write the syntax for creating a table in SQL. <span class="marks">2</span></li>
+                  <li>What is data independence? <span class="marks">2</span></li>
+                  <li>Differentiate DDL and DML. <span class="marks">2</span></li>
+                  <li>Define entity and attribute. <span class="marks">2</span></li>
+                  <li>What is a foreign key? <span class="marks">2</span></li>
+                  <li>State the purpose of indexing. <span class="marks">2</span></li>
+                  <li>What are ACID properties? <span class="marks">2</span></li>
+                </ol>
+              </div>
+
+              <div class="exam-section">
+                <h4>Part B - Answer Any Five Questions (5 x 16 = 80 Marks)</h4>
+                <ol>
+                  <li>Explain the architecture of a database management system with a neat diagram. <span class="marks">16</span></li>
+                  <li>Design an ER diagram for a college examination system and explain the entities, attributes, and relationships. <span class="marks">16</span></li>
+                  <li>Explain 1NF, 2NF, and 3NF with suitable examples. <span class="marks">16</span></li>
+                  <li>Write SQL queries using joins, grouping, aggregate functions, and nested queries for a student database. <span class="marks">16</span></li>
+                  <li>Discuss transaction management, serializability, and concurrency control techniques. <span class="marks">16</span></li>
+                  <li>Explain file organization and indexing methods used in database systems. <span class="marks">16</span></li>
+                  <li>Describe recovery techniques and log-based recovery in detail. <span class="marks">16</span></li>
+                </ol>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="universities" aria-labelledby="universities-title">
+        <div class="section-head">
+          <h2 id="universities-title">Universities</h2>
+          <p>The directory is designed to expand across universities while keeping every department and semester paper easy to scan.</p>
+        </div>
+        <div class="universities" id="universityList"></div>
+      </section>
+
+      <footer>
+        <p>Semhunt keeps previous semester papers searchable for quick revision and exam preparation.</p>
+      </footer>
+    </main>
+  </div>
+
+  <dialog id="paperModal">
+    <div class="modal-head">
+      <h3 id="modalTitle">Question Paper</h3>
+      <button class="close" id="closeModal" type="button">Close</button>
+    </div>
+    <div class="question-paper" id="modalBody"></div>
+  </dialog>
+
+  <script>
+    const universities = [
+      'University of Madras',
+      'Bharathiar University',
+      'Anna University',
+      'Madurai Kamaraj University',
+      'Periyar University',
+      'Alagappa University',
+      'Manonmaniam Sundaranar University',
+      'Bharathidasan University'
+    ];
+
+    const departments = {
+      Arts: [
+        'BBA',
+        'English Literature',
+        'Tamil Literature',
+        'History',
+        'Economics',
+        'Commerce',
+        'Business Administration',
+        'Political Science',
+        'Sociology',
+        'Psychology',
+        'Journalism and Mass Communication'
+      ],
+      Science: [
+        'BCA',
+        'B.Tech',
+        'CSE',
+        'Computer Science',
+        'Information Technology',
+        'Mathematics',
+        'Physics',
+        'Chemistry',
+        'Botany',
+        'Zoology',
+        'Microbiology',
+        'Biotechnology',
+        'Statistics'
+      ]
+    };
+
+    const papers = [
+      {
+        id: 'bca-web-2025',
+        college: 'Sri Krishna Arts and Science College',
+        university: 'Periyar University',
+        stream: 'Science',
+        department: 'BCA',
+        semester: 'Semester 5',
+        subject: 'Web Programming',
+        code: 'BCA5503',
+        year: '2025',
+        questions: [
+          'Explain the structure of an HTML document with suitable tags.',
+          'Differentiate inline, internal, and external CSS with examples.',
+          'Write JavaScript code to validate a student registration form.',
+          'Explain client-side and server-side scripting.',
+          'Create a simple webpage layout using header, navigation, main, and footer sections.'
+        ]
+      },
+      {
+        id: 'btech-dbms-2025',
+        college: 'Kongu Engineering College',
+        university: 'Anna University',
+        stream: 'Science',
+        department: 'B.Tech',
+        semester: 'Semester 4',
+        subject: 'Database Management Systems',
+        code: 'CS3452',
+        year: '2025',
+        questions: [
+          'Define DBMS and explain its major components.',
+          'Draw an ER diagram for an online exam portal.',
+          'Explain normalization with examples for 1NF, 2NF, and 3NF.',
+          'Write SQL queries using joins, grouping, and aggregate functions.',
+          'Discuss transaction management and ACID properties.'
+        ]
+      },
+      {
+        id: 'bba-mm-2024',
+        college: 'Bishop Heber College',
+        university: 'Bharathidasan University',
+        stream: 'Arts',
+        department: 'BBA',
+        semester: 'Semester 3',
+        subject: 'Marketing Management',
+        code: 'BBA3302',
+        year: '2024',
+        questions: [
+          'Define marketing and explain the modern marketing concept.',
+          'Discuss market segmentation, targeting, and positioning.',
+          'Explain the product life cycle with suitable examples.',
+          'Describe pricing methods used by business organizations.',
+          'Write short notes on branding, packaging, and digital promotion.'
+        ]
+      },
+      {
+        id: 'cse-os-2024',
+        college: 'Rajalakshmi Engineering College',
+        university: 'Anna University',
+        stream: 'Science',
+        department: 'CSE',
+        semester: 'Semester 5',
+        subject: 'Operating Systems',
+        code: 'CS3501',
+        year: '2024',
+        questions: [
+          'Explain process states and process control block.',
+          'Compare FCFS, SJF, priority, and round robin scheduling algorithms.',
+          'Discuss deadlock prevention, avoidance, and detection.',
+          'Explain paging and segmentation in memory management.',
+          'Describe file allocation methods with neat diagrams.'
+        ]
+      },
+      {
+        id: 'cs-ds-2025',
+        college: 'Loyola College',
+        university: 'University of Madras',
+        stream: 'Science',
+        department: 'Computer Science',
+        semester: 'Semester 3',
+        subject: 'Data Structures',
+        code: 'CS3301',
+        year: '2025',
+        questions: [
+          'Define stack and queue. Explain two real-time applications for each.',
+          'Write an algorithm for insertion and deletion in a singly linked list.',
+          'Explain binary search tree traversal methods with an example.',
+          'Compare bubble sort, selection sort, and quick sort.',
+          'Design a hash table for student register numbers and discuss collision handling.'
+        ]
+      },
+      {
+        id: 'commerce-fa-2024',
+        college: 'PSG College of Arts and Science',
+        university: 'Bharathiar University',
+        stream: 'Arts',
+        department: 'Commerce',
+        semester: 'Semester 2',
+        subject: 'Financial Accounting',
+        code: 'BCO2204',
+        year: '2024',
+        questions: [
+          'Explain the accounting concepts and conventions used in preparing final accounts.',
+          'Prepare a trading account and profit and loss account from a given trial balance.',
+          'Distinguish between single entry and double entry systems.',
+          'Describe depreciation methods with suitable examples.',
+          'Prepare a bank reconciliation statement using common adjustment items.'
+        ]
+      },
+      {
+        id: 'physics-em-2023',
+        college: 'The American College',
+        university: 'Madurai Kamaraj University',
+        stream: 'Science',
+        department: 'Physics',
+        semester: 'Semester 4',
+        subject: 'Electromagnetism',
+        code: 'PHY4402',
+        year: '2023',
+        questions: [
+          'State and prove Gauss law in electrostatics.',
+          'Derive the expression for electric potential due to an electric dipole.',
+          'Explain Biot-Savart law and its application to a circular coil.',
+          'Discuss Maxwell equations and their physical significance.',
+          'Write short notes on electromagnetic induction and self-inductance.'
+        ]
+      }
+    ];
+
+    const universityFilter = document.querySelector('#universityFilter');
+    const streamFilter = document.querySelector('#streamFilter');
+    const departmentFilter = document.querySelector('#departmentFilter');
+    const searchInput = document.querySelector('#searchInput');
+    const paperList = document.querySelector('#paperList');
+    const resultCount = document.querySelector('#resultCount');
+    const departmentLayout = document.querySelector('#departmentLayout');
+    const universityList = document.querySelector('#universityList');
+    const modal = document.querySelector('#paperModal');
+    const modalTitle = document.querySelector('#modalTitle');
+    const modalBody = document.querySelector('#modalBody');
+    const closeModal = document.querySelector('#closeModal');
+
+    function fillFilters() {
+      universities.forEach((name) => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        universityFilter.appendChild(option);
+      });
+
+      Object.values(departments).flat().forEach((name) => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        departmentFilter.appendChild(option);
+      });
+    }
+
+    function renderDepartments() {
+      departmentLayout.innerHTML = Object.entries(departments).map(([stream, names]) => `
+        <div class="dept-band">
+          <h3>${stream} Departments</h3>
+          <div class="dept-grid">
+            ${names.map((name) => `
+              <button class="dept-item" type="button" data-stream="${stream}" data-department="${name}">
+                <span>${name}</span>
+                <span>${countPapers(name)} papers</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderUniversities() {
+      universityList.innerHTML = universities.map((name) => `
+        <div class="university">
+          <strong>${name}</strong>
+          <span>${papers.filter((paper) => paper.university === name).length} sample papers available. Arts and science departments can be added semester by semester.</span>
+        </div>
+      `).join('');
+    }
+
+    function countPapers(department) {
+      return papers.filter((paper) => paper.department === department).length;
+    }
+
+    function matchesPaper(paper) {
+      const selectedUniversity = universityFilter.value;
+      const selectedStream = streamFilter.value;
+      const selectedDepartment = departmentFilter.value;
+      const search = searchInput.value.trim().toLowerCase();
+      const searchable = [
+        paper.university,
+        paper.stream,
+        paper.department,
+        paper.semester,
+        paper.subject,
+        paper.code,
+        paper.year
+      ].join(' ').toLowerCase();
+
+      return (selectedUniversity === 'all' || paper.university === selectedUniversity)
+        && (selectedStream === 'all' || paper.stream === selectedStream)
+        && (selectedDepartment === 'all' || paper.department === selectedDepartment)
+        && (!search || searchable.includes(search));
+    }
+
+    function renderPapers() {
+      const filtered = papers.filter(matchesPaper);
+      resultCount.textContent = `${filtered.length} ${filtered.length === 1 ? 'paper' : 'papers'}`;
+
+      if (!filtered.length) {
+        paperList.innerHTML = '<div class="empty">No papers found for this filter. Try another university, stream, or department.</div>';
+        return;
+      }
+
+      paperList.innerHTML = filtered.map((paper) => `
+        <article class="paper-card">
+          <h4>${paper.subject}</h4>
+          <div class="meta">
+            <span class="chip">${paper.university}</span>
+            <span class="chip">${paper.department}</span>
+            <span class="chip">${paper.semester}</span>
+            <span class="chip">${paper.year}</span>
+            <span class="chip">${paper.code}</span>
+          </div>
+          <div class="actions">
+            <button class="btn primary" type="button" data-open="${paper.id}">View 100 Mark Paper</button>
+            <button class="btn secondary" type="button" data-filter="${paper.department}">More from Department</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function getShortQuestions(paper) {
+      return [
+        `Define ${paper.subject}.`,
+        `Write any two important uses of ${paper.subject}.`,
+        `List the main components studied in ${paper.subject}.`,
+        `Give one real-time example related to ${paper.subject}.`,
+        `What is the need for ${paper.subject} in ${paper.department}?`,
+        `Mention any two advantages of learning ${paper.subject}.`,
+        `Write a short note on the basic concept of ${paper.subject}.`,
+        `State any two limitations or challenges in ${paper.subject}.`,
+        `Name two tools, methods, or principles used in ${paper.subject}.`,
+        `Differentiate any two key terms from ${paper.subject}.`
+      ];
+    }
+
+    function getLongQuestions(paper) {
+      const baseQuestions = paper.questions.map((question) => question.replace(/\.$/, ''));
+      const requiredQuestions = [
+        ...baseQuestions,
+        `Explain the important principles of ${paper.subject} with suitable examples`,
+        `Discuss the applications of ${paper.subject} in ${paper.department}`,
+        `Write detailed notes on recent developments related to ${paper.subject}`
+      ];
+
+      return requiredQuestions.slice(0, 7);
+    }
+
+    function openPaper(id) {
+      const paper = papers.find((item) => item.id === id);
+      if (!paper) return;
+
+      modalTitle.textContent = `${paper.subject} - ${paper.year}`;
+      const shortQuestions = getShortQuestions(paper);
+      const longQuestions = getLongQuestions(paper);
+
+      modalBody.innerHTML = `
+        <article class="exam-paper" aria-label="${paper.subject} question paper">
+          <div class="exam-header">
+            <div class="college-logo">SC</div>
+            <div>
+              <h3>${paper.college}</h3>
+              <p>${paper.university}<br>${paper.department} Department Examination - ${paper.year}</p>
+            </div>
+          </div>
+
+          <div class="exam-meta">
+            <span>Register No: __________________</span>
+            <span>Course Code: ${paper.code}</span>
+            <span>Department: ${paper.department}</span>
+            <span>Maximum Marks: 100</span>
+            <span>${paper.semester}</span>
+            <span>Time: 3 Hours</span>
+          </div>
+
+          <h3 class="exam-title">${paper.subject}</h3>
+          <p class="exam-instructions"><strong>Instructions:</strong> Answer all questions in Part A. Answer any five questions from Part B. Each Part B answer should include neat diagrams or examples wherever required.</p>
+
+          <div class="exam-section">
+            <h4>Part A - Answer All Questions (10 x 2 = 20 Marks)</h4>
+            <ol>
+              ${shortQuestions.map((question) => `<li>${question} <span class="marks">2</span></li>`).join('')}
+            </ol>
+          </div>
+
+          <div class="exam-section">
+            <h4>Part B - Answer Any Five Questions (5 x 16 = 80 Marks)</h4>
+            <ol>
+              ${longQuestions.map((question) => `<li>${question}. <span class="marks">16</span></li>`).join('')}
+            </ol>
+          </div>
+        </article>
+      `;
+      modal.showModal();
+    }
+
+    paperList.addEventListener('click', (event) => {
+      const openButton = event.target.closest('[data-open]');
+      const filterButton = event.target.closest('[data-filter]');
+
+      if (openButton) {
+        openPaper(openButton.dataset.open);
+      }
+
+      if (filterButton) {
+        departmentFilter.value = filterButton.dataset.filter;
+        renderPapers();
+      }
+    });
+
+    departmentLayout.addEventListener('click', (event) => {
+      const button = event.target.closest('.dept-item');
+      if (!button) return;
+
+      streamFilter.value = button.dataset.stream;
+      departmentFilter.value = button.dataset.department;
+      renderPapers();
+      document.querySelector('#papers').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    [universityFilter, streamFilter, departmentFilter, searchInput].forEach((control) => {
+      control.addEventListener('input', renderPapers);
+    });
+
+    closeModal.addEventListener('click', () => modal.close());
+
+    fillFilters();
+    renderDepartments();
+    renderUniversities();
+    renderPapers();
+  </script>
+</body>
+</html>

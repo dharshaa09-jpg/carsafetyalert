@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ForestGuard AI</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-sA+e2d0Z2cY+Kp6FQFfepilZ8uxsL1jG9DP+1C5A8Pg=" crossorigin="" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="login-screen" class="login-screen">
+    <div class="login-card">
+      <h2>ForestGuard AI Login</h2>
+      <form id="login-form">
+        <label>Username</label>
+        <input id="login-username" type="text" placeholder="username" required>
+        <label>Password</label>
+        <input id="login-password" type="password" placeholder="password" required>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px;">
+          <button type="submit" class="primary-button">Login</button>
+          <button type="button" id="cancel-login" class="secondary-button">Cancel</button>
+        </div>
+      </form>
+      <p class="login-help">Use sample login: <strong>admin</strong> / <strong>forest123</strong></p>
+    </div>
+  </div>
+
+  <div id="app-shell" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">FG</div>
+        <div>
+          <h1>ForestGuard AI</h1>
+          <p>Forest Department Smart Monitoring System</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-button active" data-target="dashboard">Dashboard</button>
+        <button class="nav-button" data-target="live">Live Tracking</button>
+        <button class="nav-button" data-target="patrol">Patrol Management</button>
+        <button class="nav-button" data-target="reports">Incidents</button>
+        <button class="nav-button" data-target="devices">Devices</button>
+        <button class="nav-button" data-target="admin">Admin</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="footer-item">
+          <span>SOS Alerts</span>
+          <strong id="sos-alert-count">2</strong>
+        </div>
+        <div class="footer-item">
+          <span>LoRa</span>
+          <strong>Connected</strong>
+        </div>
+      </div>
+    </aside>
+
+    <div class="content-area">
+      <header class="topbar">
+        <div>
+          <h2>Forest Operations Control</h2>
+          <p>Real-time operational dashboard for field command.</p>
+        </div>
+        <div class="topbar-actions">
+          <button id="voice-button" class="secondary-button">Voice Command</button>
+          <button id="sos-button" class="sos-button">SOS</button>
+          <button id="offline-toggle" class="secondary-button">Toggle Offline</button>
+          <div class="status-pill online" id="connection-status">Online</div>
+          <div class="notification-badge" id="notification-badge">0</div>
+          <div class="status-pill small">Admin Control Room</div>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <section id="dashboard" class="panel active-panel">
+          <section class="overview-grid">
+            <article class="stat-card stat-blue">
+              <span>Officers Online</span>
+              <strong id="officers-online">24</strong>
+              <small>+7% today</small>
+            </article>
+            <article class="stat-card stat-green">
+              <span>Active Patrols</span>
+              <strong id="active-patrols">18</strong>
+              <small>Live</small>
+            </article>
+            <article class="stat-card stat-red">
+              <span>SOS Alerts</span>
+              <strong id="sos-alert-count-top">2</strong>
+              <small>Active</small>
+            </article>
+            <article class="stat-card stat-yellow">
+              <span>Incidents Today</span>
+              <strong id="incident-count-today">7</strong>
+              <small>+12%</small>
+            </article>
+            <article class="stat-card stat-teal">
+              <span>Devices Online</span>
+              <strong id="device-count">28</strong>
+              <small>Stable</small>
+            </article>
+            <article class="stat-card stat-purple">
+              <span>Area Covered</span>
+              <strong id="area-covered">1,245 km²</strong>
+              <small>Zone 7</small>
+            </article>
+          </section>
+
+          <div class="dashboard-action-bar">
+            <button id="dashboard-menu-toggle" class="slide-toggle-button">Dashboard Menu</button>
+            <div id="dashboard-slide-box" class="dashboard-slide-box">
+              <div class="dashboard-action-buttons">
+                <button type="button" class="dashboard-action-button" data-panel="live">Live Tracking</button>
+                <button type="button" class="dashboard-action-button" data-panel="patrol">Patrol Management</button>
+                <button type="button" class="dashboard-action-button" data-panel="dashboard" data-section="sos-alerts">SOS & Alerts</button>
+                <button type="button" class="dashboard-action-button" data-panel="reports">Incident Reports</button>
+                <button type="button" class="dashboard-action-button" data-panel="dashboard" data-section="wildlife-tracking">Wildlife Tracking</button>
+                <button type="button" class="dashboard-action-button" data-panel="dashboard" data-section="forest-fire">Forest Fire</button>
+                <button type="button" class="dashboard-action-button" data-panel="dashboard" data-section="checkpoints">Checkpoints</button>
+                <button type="button" class="dashboard-action-button" data-panel="dashboard" data-section="geofencing">Geofencing</button>
+                <button type="button" class="dashboard-action-button" data-panel="devices">Devices</button>
+                <button type="button" class="dashboard-action-button" data-panel="dashboard" data-section="users">Users</button>
+                <button type="button" class="dashboard-action-button" data-panel="admin">Analytics & Reports</button>
+                <button type="button" class="dashboard-action-button" data-panel="dashboard" data-section="notifications">Notification</button>
+                <button type="button" class="dashboard-action-button" data-panel="dashboard" data-section="settings">Setting</button>
+              </div>
+            </div>
+          </div>
+
+          <section class="dashboard-widget-grid">
+            <div class="widget-card card" id="sos-alerts">
+              <h3>SOS & Alerts</h3>
+              <p>Emergency calls, active alerts, and recent incident flags in one place.</p>
+            </div>
+            <div class="widget-card card" id="wildlife-tracking">
+              <h3>Wildlife Tracking</h3>
+              <p>Track protected species movements and habitat monitoring updates.</p>
+            </div>
+            <div class="widget-card card" id="forest-fire">
+              <h3>Forest Fire</h3>
+              <p>Fire hotspots and containment progress for vulnerable zones.</p>
+            </div>
+            <div class="widget-card card" id="checkpoints">
+              <h3>Checkpoints</h3>
+              <p>Active checkpoints and ranger posts across the forest reserve.</p>
+            </div>
+            <div class="widget-card card" id="geofencing">
+              <h3>Geofencing</h3>
+              <p>Protected area boundaries and breach warnings for control teams.</p>
+            </div>
+            <div class="widget-card card" id="ml-insights">
+              <h3>AI Incident Analysis</h3>
+              <p id="ml-insight-text">Loading AI model and analyzing reports...</p>
+            </div>
+            <div class="widget-card card" id="users">
+              <h3>Users</h3>
+              <p>Manage ranger accounts, forest admins, and access control settings.</p>
+            </div>
+            <div class="widget-card card" id="settings">
+              <h3>Settings</h3>
+              <p>System options, notification preferences, and dashboard controls.</p>
+            </div>
+          </section>
+
+          <section class="bottom-grid">
+            <div class="chart-card card">
+              <h4>Patrol Route Analytics</h4>
+              <div class="chart-placeholder">[Chart]</div>
+            </div>
+            <div class="geo-card card">
+              <h4>Geofencing Alerts</h4>
+              <ul class="geofence-list">
+                <li>Ranger Anita crossed red zone</li>
+                <li>Ranger Mohan left patrol area</li>
+              </ul>
+            </div>
+          </section>
+
+          <aside class="notifications-panel">
+            <div class="notifications-header">
+              <h3>Notifications</h3>
+              <button id="clear-notifications" class="secondary-button">Clear</button>
+            </div>
+            <ul id="notifications-list" class="notification-list"></ul>
+          </aside>
+        </section>
+
+        <section id="live" class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Live Tracking</h2>
+              <p>Monitor active patrol movement and device updates.</p>
+            </div>
+            <button id="refresh-map" class="secondary-button">Refresh Map</button>
+          </div>
+
+          <div class="main-grid">
+            <div class="map-panel card">
+              <div id="mapid" class="dashboard-map"></div>
+            </div>
+            <div class="side-panel card">
+              <h3>Latest Alerts</h3>
+              <ul class="alert-list">
+                <li>
+                  <span class="alert-type alert-red">SOS</span>
+                  <div>
+                    <strong>Ranger Sam</strong>
+                    <p>Zone 4 River Bank</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="alert-type alert-orange">Fire</span>
+                  <div>
+                    <strong>Forest Watch</strong>
+                    <p>Hill Sector 3</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="patrol" class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Patrol Management</h2>
+              <p>Assign and manage teams across gazetted areas.</p>
+            </div>
+          </div>
+
+          <div class="panel-grid">
+            <div class="card">
+              <h3>Assign Patrol</h3>
+              <form id="patrol-form">
+                <label>Name</label>
+                <input id="patrol-name" type="text" placeholder="Officer or team" required>
+                <label>Area / Zone</label>
+                <input id="patrol-area" type="text" placeholder="Sector, trail or zone" required>
+                <button type="submit" class="primary-button">Deploy Patrol</button>
+              </form>
+            </div>
+            <div class="card">
+              <h3>Active Patrols</h3>
+              <ul id="patrol-list" class="item-list"></ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="reports" class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Incident Reports</h2>
+              <p>Log sightings, threats, and environmental events.</p>
+            </div>
+          </div>
+
+          <div class="panel-grid">
+            <div class="card">
+              <h3>Report Incident</h3>
+              <form id="incident-form">
+                <label>Incident Type</label>
+                <select id="incident-type" required>
+                  <option value="Wildfire">Wildfire</option>
+                  <option value="Illegal Logging">Illegal Logging</option>
+                  <option value="Wildlife">Wildlife</option>
+                  <option value="Fire Detection">Fire Detection</option>
+                  <option value="SOS">SOS</option>
+                </select>
+                <label>Location</label>
+                <input id="incident-location" type="text" placeholder="lat, lng or place" required>
+                <button type="button" id="use-gps" class="secondary-button">Use GPS</button>
+                <label>Description</label>
+                <textarea id="incident-description" rows="4" placeholder="Details about the incident" required></textarea>
+                <button type="submit" class="primary-button">Submit Report</button>
+              </form>
+            </div>
+            <div class="card">
+              <h3>Report Feed</h3>
+              <div class="report-filters">
+                <button class="filter-button active" data-filter="all">All</button>
+                <button class="filter-button" data-filter="Wildfire">Wildfire</button>
+                <button class="filter-button" data-filter="Illegal Logging">Illegal</button>
+                <button class="filter-button" data-filter="Wildlife">Wildlife</button>
+                <button class="filter-button" data-filter="Fire Detection">Fire</button>
+                <button class="filter-button" data-filter="SOS">SOS</button>
+              </div>
+              <div id="incidents"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="devices" class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Device Fleet</h2>
+              <p>Manage LoRa hubs and GPS trackers in the field.</p>
+            </div>
+          </div>
+
+          <div class="panel-grid">
+            <div class="card">
+              <h3>Connected Devices</h3>
+              <ul id="device-list" class="item-list"></ul>
+            </div>
+            <div class="card">
+              <h3>Sync Status</h3>
+              <p>Pending action queue: <strong id="queue-count">0</strong></p>
+              <p>Admin queue size: <strong id="admin-queue-count">0</strong></p>
+            </div>
+          </div>
+        </section>
+
+        <section id="admin" class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Admin Command</h2>
+              <p>System health, analytics, and alerts management.</p>
+            </div>
+          </div>
+
+          <div class="panel-grid">
+            <div class="analytics-card card">
+              <h3>Incident Analytics</h3>
+              <div class="analytics-bars">
+                <div class="analytics-row">
+                  <span>Wildfire</span>
+                  <div class="bar-container"><span id="wildfire-bar" class="bar wildfire"></span></div>
+                  <strong id="wildfire-count">0</strong>
+                </div>
+                <div class="analytics-row">
+                  <span>Illegal</span>
+                  <div class="bar-container"><span id="illegal-bar" class="bar illegal"></span></div>
+                  <strong id="illegal-count">0</strong>
+                </div>
+                <div class="analytics-row">
+                  <span>Wildlife</span>
+                  <div class="bar-container"><span id="wildlife-bar" class="bar wildlife"></span></div>
+                  <strong id="wildlife-count">0</strong>
+                </div>
+                <div class="analytics-row">
+                  <span>Fire</span>
+                  <div class="bar-container"><span id="fire-bar" class="bar fire"></span></div>
+                  <strong id="fire-count">0</strong>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Summary</h3>
+              <div class="data-card">
+                  <p>Total alerts <strong id="total-alerts">0</strong></p>
+                <p>Active patrols <strong id="summary-active-patrols">0</strong></p>
+                <p>Devices online <strong id="summary-device-count">0</strong></p>
+                <p>Area covered <strong id="summary-area-covered">1,245 km²</strong></p>
+              </div>
+            </div>
+            <div class="notifications-panel card">
+              <div class="notifications-header">
+                <h3>Notifications</h3>
+                <button id="clear-notifications-admin" class="secondary-button">Clear</button>
+              </div>
+              <p id="notification-summary">0 unread</p>
+              <ul id="admin-notifications-list" class="notification-list"></ul>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-o9N1j7kZ3mYQu5icl5GTkIWf4GfhIaN7Q39+DQ+Pz6A=" crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.12.0/dist/tf.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

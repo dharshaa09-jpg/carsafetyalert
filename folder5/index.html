@@ -1,0 +1,1025 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Echopath | Voice Navigation for Blind People</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --bg: #040814;
+      --surface: rgba(255, 255, 255, 0.07);
+      --surface-strong: rgba(255, 255, 255, 0.12);
+      --text: #edf1ff;
+      --muted: #9aa7c4;
+      --accent: #ffcc2d;
+      --accent-strong: #ffd738;
+      --border: rgba(255, 255, 255, 0.09);
+      --shadow: rgba(0, 0, 0, 0.35);
+      --radius: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: radial-gradient(circle at top left, rgba(86, 158, 255, 0.16), transparent 24%),
+                  radial-gradient(circle at top right, rgba(255, 199, 63, 0.12), transparent 24%),
+                  linear-gradient(180deg, #06122a 0%, #02050f 100%);
+      color: var(--text);
+      scroll-behavior: smooth;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 30%);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    body {
+      font-family: var(--font-family);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    a:focus-visible {
+      outline: 3px solid rgba(255, 220, 73, 0.7);
+      outline-offset: 3px;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 28px 24px 44px;
+      display: grid;
+      gap: 36px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      padding: 16px 0 8px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 204, 45, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .brand-mark::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent) 0%, #f4d35d 100%);
+      box-shadow: 0 0 0 8px rgba(255, 204, 45, 0.16);
+    }
+
+    .brand-text {
+      display: grid;
+      gap: 4px;
+    }
+
+    .brand-text .brand-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-text .brand-subtitle {
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      transition: color 0.2s ease;
+    }
+
+    nav a.active,
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+      gap: 34px;
+      align-items: center;
+      min-height: calc(100vh - 168px);
+    }
+
+    .hero-copy {
+      max-width: 720px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      color: var(--accent);
+      background: rgba(255, 204, 45, 0.11);
+      border: 1px solid rgba(255, 204, 45, 0.18);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(3rem, 6vw, 5.1rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      font-weight: 900;
+      max-width: 11ch;
+      background: linear-gradient(90deg, #ffffff, #ffe976 38%, #ffce2b 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text {
+      margin: 28px 0 0;
+      max-width: 640px;
+      font-size: 1.06rem;
+      color: #d8dced;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 22px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+    }
+
+    .button.primary {
+      color: #08110a;
+      background: linear-gradient(135deg, #ffdd6b 0%, #ffcd2f 100%);
+    }
+
+    .button.secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    .feature-grid {
+      margin-top: 44px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .feature-card {
+      display: grid;
+      gap: 16px;
+      padding: 24px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.09);
+      font-size: 1.35rem;
+    }
+
+    .feature-title {
+      margin: 0;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .feature-text {
+      margin: 0;
+      color: #bfc8df;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .assistant-panel {
+      position: relative;
+      overflow: hidden;
+      padding: 34px 30px 30px;
+      border-radius: 34px;
+      background: linear-gradient(180deg, rgba(9, 20, 46, 0.96), rgba(2, 4, 14, 0.96));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 42px 100px rgba(0, 0, 0, 0.32);
+    }
+
+    .assistant-panel::before {
+      content: '';
+      position: absolute;
+      right: -20%;
+      top: -14%;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 204, 45, 0.18), transparent 58%);
+      pointer-events: none;
+    }
+
+    .assistant-panel::after {
+      content: '';
+      position: absolute;
+      left: -24%;
+      bottom: -18%;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(86, 158, 255, 0.12), transparent 60%);
+      pointer-events: none;
+    }
+
+    .assistant-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .assistant-title {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .assistant-subtitle {
+      margin: 6px 0 0;
+      color: #b8bfd7;
+      font-size: 0.96rem;
+      line-height: 1.5;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(86, 213, 111, 0.12);
+      border: 1px solid rgba(86, 213, 111, 0.18);
+      color: #c7ffdc;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .status-pill .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #56d56f;
+      box-shadow: 0 0 0 4px rgba(86, 213, 111, 0.18);
+    }
+
+    .assistant-body {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .mic-action {
+      width: 202px;
+      height: 202px;
+      margin: 0 auto;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at top, #fff5c4 0%, #ffd83f 43%, #ffca00 100%);
+      box-shadow: 0 0 0 20px rgba(255, 204, 45, 0.12), 0 22px 70px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+      transition: transform 0.22s ease;
+    }
+
+    .mic-action:hover {
+      transform: translateY(-3px);
+    }
+
+    .mic-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.85);
+      color: #050505;
+      font-size: 1.8rem;
+    }
+
+    .assistant-body h2 {
+      margin: 26px auto 10px;
+      font-size: 1.55rem;
+      line-height: 1.1;
+    }
+
+    .assistant-body p {
+      margin: 0;
+      color: #d3d8eb;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .assistant-body strong {
+      color: #fff;
+    }
+
+    .assistant-info {
+      margin-top: 28px;
+      display: grid;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .info-card {
+      padding: 18px 22px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .info-row span {
+      color: #9fa6c6;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .info-row strong {
+      color: #fff;
+      font-size: 0.98rem;
+      font-weight: 800;
+    }
+
+    .helper-text {
+      margin-top: 12px;
+      color: #9fa6c6;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .app-section {
+      display: grid;
+      gap: 28px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.7fr);
+      gap: 28px;
+    }
+
+    .route-panel,
+    .card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+    }
+
+    .route-panel {
+      padding: 24px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 2.8vw, 2.6rem);
+      line-height: 1.05;
+    }
+
+    .map {
+      position: relative;
+      min-height: 420px;
+      border-radius: 24px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.06) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 2px, transparent 2px),
+        #0d121f;
+      background-size: 48px 48px;
+    }
+
+    .street,
+    .path {
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .street.one {
+      left: -6%;
+      top: 40%;
+      width: 112%;
+      height: 22px;
+      transform: rotate(-9deg);
+    }
+
+    .street.two {
+      left: 48%;
+      top: -8%;
+      width: 22px;
+      height: 116%;
+      transform: rotate(8deg);
+    }
+
+    .street.three {
+      left: 12%;
+      bottom: 18%;
+      width: 76%;
+      height: 16px;
+      transform: rotate(28deg);
+    }
+
+    .path {
+      left: 18%;
+      top: 20%;
+      width: 64%;
+      height: 56%;
+      border: 8px solid transparent;
+      border-left-color: var(--accent);
+      border-bottom-color: var(--accent);
+      border-radius: 28% 18% 42% 26%;
+      filter: drop-shadow(0 0 16px rgba(255, 204, 45, 0.52));
+    }
+
+    .path::before,
+    .path::after {
+      content: '';
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+    }
+
+    .path::before {
+      left: -14px;
+      top: -8px;
+      background: #ffe96b;
+    }
+
+    .path::after {
+      right: -12px;
+      bottom: -14px;
+      background: rgba(255, 255, 255, 0.65);
+    }
+
+    .turn-card {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(2, 5, 17, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(12px);
+    }
+
+    .turn-card span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .turn-card strong {
+      display: block;
+      font-size: clamp(1.35rem, 3.2vw, 2.2rem);
+      line-height: 1.25;
+    }
+
+    .instructions {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .instruction {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+    }
+
+    .instruction.current {
+      color: var(--text);
+      border-color: rgba(255, 204, 45, 0.85);
+      background: rgba(255, 204, 45, 0.1);
+    }
+
+    .instruction span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #09100a;
+      font-weight: 800;
+    }
+
+    .card {
+      padding: 24px;
+    }
+
+    .card h2 {
+      margin-bottom: 18px;
+      font-size: clamp(1.55rem, 2.8vw, 2.2rem);
+    }
+
+    .command-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .command-list li {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .command-list strong {
+      display: block;
+      color: #fff;
+      font-size: 1.02rem;
+      margin-bottom: 4px;
+    }
+
+    .safety-note {
+      margin-top: 22px;
+      padding: 18px;
+      border-left: 4px solid #ffcc2d;
+      border-radius: 18px;
+      background: rgba(255, 204, 45, 0.08);
+      color: #f7f1d8;
+      line-height: 1.7;
+    }
+
+    footer {
+      text-align: center;
+      padding-top: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 1120px) {
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 20px 18px 36px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .assistant-panel {
+        padding: 28px 22px 24px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .assistant-panel::before,
+      .assistant-panel::after {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div class="brand-text">
+          <div class="brand-title">Echopath</div>
+          <div class="brand-subtitle">Voice-first navigation</div>
+        </div>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#assistant" class="active">Voice Assistant</a>
+        <a href="#route">Route</a>
+        <a href="#commands">Commands</a>
+      </nav>
+    </header>
+
+    <main id="top" class="hero">
+      <section class="hero-copy">
+        <div class="hero-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v6"/><path d="M7 8h10"/><path d="M8 16a4 4 0 0 0 8 0"/></svg>
+          Voice-first navigation
+        </div>
+        <h1 class="hero-title">Speak. Locate. Walk with guidance.</h1>
+        <p class="hero-text">Echopath listens to your voice and guides you safely to your destination. The interface is designed for fast commands, live direction, and strong user privacy.</p>
+
+        <div class="hero-actions">
+          <button class="button primary" type="button">Start voice guide</button>
+          <button class="button secondary" type="button">Locate current address</button>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🎤</div>
+            <div>
+              <p class="feature-title">Voice Navigation</p>
+              <p class="feature-text">Speak commands naturally and get clear spoken directions.</p>
+            </div>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🚶</div>
+            <div>
+              <p class="feature-title">Live Guidance</p>
+              <p class="feature-text">Receive real-time route updates as you walk.</p>
+            </div>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🗣️</div>
+            <div>
+              <p class="feature-title">Easy Commands</p>
+              <p class="feature-text">Speak concise phrases like locate, navigate, or repeat.</p>
+            </div>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🔒</div>
+            <div>
+              <p class="feature-title">Privacy Focused</p>
+              <p class="feature-text">Sensitive travel data stays private with local control.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <aside class="assistant-panel" id="assistant" aria-labelledby="assistant-title">
+        <div class="assistant-header">
+          <div>
+            <div class="assistant-title" id="assistant-title">Voice Assistant</div>
+            <div class="assistant-subtitle">Your voice, your way.</div>
+          </div>
+          <div class="status-pill"><span class="dot" aria-hidden="true"></span>Online</div>
+        </div>
+
+        <div class="assistant-body">
+          <button class="mic-action" id="micButton" type="button" aria-label="Tap to allow microphone">
+            <span class="mic-icon">🎙️</span>
+          </button>
+          <h2>Tap to allow microphone</h2>
+          <p>Then say: <strong>set location</strong> to update your current address.</p>
+        </div>
+
+        <div class="assistant-info">
+          <div class="info-card">
+            <div class="info-row">
+              <span>Assistant Status</span>
+              <strong>Ready to listen</strong>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-row">
+              <span>Listening for voice command...</span>
+              <strong>Active</strong>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <section class="app-section grid" id="route" aria-label="Navigation route and location">
+      <div class="route-panel">
+        <div class="section-title">
+          <h2>Live Route</h2>
+          <button class="button secondary" type="button">Next step</button>
+        </div>
+        <div class="map" aria-hidden="true">
+          <span class="street one"></span>
+          <span class="street two"></span>
+          <span class="street three"></span>
+          <span class="path"></span>
+          <div class="turn-card">
+            <span>Current instruction</span>
+            <strong>No route started yet.</strong>
+          </div>
+        </div>
+        <div class="instructions" aria-label="Step-by-step instructions"></div>
+      </div>
+      <aside class="card" aria-labelledby="location-title">
+        <h2 id="location-title">Location Details</h2>
+        <div class="info-card">
+          <div class="info-row">
+            <span>Current address</span>
+            <strong id="currentAddressOutput">Not located yet.</strong>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-row">
+            <span>Coordinates</span>
+            <strong id="coordinatesOutput">Waiting for location permission.</strong>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-row">
+            <span>Destination</span>
+            <strong id="destinationOutput">Home</strong>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-row">
+            <span>Voice command</span>
+            <strong>Say "set location" after granting microphone access.</strong>
+          </div>
+        </div>
+        <p class="safety-note">
+          Microphone, speech recognition, and geolocation work best in Chrome or Edge over HTTPS or localhost.
+        </p>
+      </aside>
+    </section>
+
+    <section class="app-section grid" id="commands" aria-label="Available voice commands">
+      <div class="card">
+        <h2>Voice Commands</h2>
+        <ul class="command-list">
+          <li><strong>"Locate current address"</strong> Finds the current location and reads the detected address aloud.</li>
+          <li><strong>"Locate current address to home"</strong> Starts spoken guidance to the saved home destination.</li>
+          <li><strong>"Set location"</strong> Uses microphone access to update the current address in Location Details.</li>
+          <li><strong>"Navigate home"</strong> Begins navigation toward home.</li>
+          <li><strong>"Repeat instruction"</strong> Replays the current spoken instruction.</li>
+          <li><strong>"Stop navigation"</strong> Ends the route guidance.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>How Echopath Guides</h2>
+        <ul class="command-list">
+          <li><strong>1. Listen</strong> Tap the microphone and speak naturally.</li>
+          <li><strong>2. Locate</strong> Echopath finds your current position and announces it.</li>
+          <li><strong>3. Navigate</strong> The assistant provides spoken turn-by-turn directions.</li>
+          <li><strong>4. Confirm</strong> Say repeat, next, left, or right to continue.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      Echopath is an accessible voice navigation prototype for blind and low-vision users.
+    </footer>
+  </div>
+
+  <script>
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const micButton = document.getElementById('micButton');
+    const currentAddressOutput = document.getElementById('currentAddressOutput');
+    const coordinatesOutput = document.getElementById('coordinatesOutput');
+    const destinationOutput = document.getElementById('destinationOutput');
+
+    let recognition = null;
+    let isListening = false;
+
+    function speak(message) {
+      if (!('speechSynthesis' in window)) {
+        return;
+      }
+      const utterance = new SpeechSynthesisUtterance(message);
+      utterance.rate = 0.95;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function getCurrentPosition() {
+      return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+          reject(new Error('Geolocation not supported.'));
+          return;
+        }
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+          enableHighAccuracy: true,
+          timeout: 12000,
+          maximumAge: 0,
+        });
+      });
+    }
+
+    async function reverseGeocode(lat, lon) {
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`,
+          { headers: { Accept: 'application/json' } }
+        );
+        if (!response.ok) {
+          throw new Error('Reverse geocode failed');
+        }
+        const data = await response.json();
+        return data.display_name || `Latitude ${lat.toFixed(5)}, longitude ${lon.toFixed(5)}`;
+      } catch (error) {
+        return `Latitude ${lat.toFixed(5)}, longitude ${lon.toFixed(5)}`;
+      }
+    }
+
+    async function locateCurrentAddress() {
+      currentAddressOutput.textContent = 'Getting current location...';
+      coordinatesOutput.textContent = 'Waiting for location permission...';
+      try {
+        const position = await getCurrentPosition();
+        const { latitude, longitude, accuracy } = position.coords;
+        const address = await reverseGeocode(latitude, longitude);
+        currentAddressOutput.textContent = address;
+        coordinatesOutput.textContent = `${latitude.toFixed(6)}, ${longitude.toFixed(6)} (${Math.round(accuracy)}m)`;
+        destinationOutput.textContent = 'Home';
+        speak('Location set. Current address updated.');
+      } catch (error) {
+        currentAddressOutput.textContent = 'Unable to retrieve location.';
+        coordinatesOutput.textContent = 'Permission denied or unavailable.';
+        speak('I could not get your location. Please allow microphone and location access.');
+      }
+    }
+
+    function initRecognition() {
+      if (!SpeechRecognition) {
+        speak('Speech recognition is not available in this browser.');
+        return;
+      }
+      recognition = new SpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      recognition.addEventListener('start', () => {
+        isListening = true;
+        micButton.setAttribute('aria-pressed', 'true');
+        micButton.style.transform = 'scale(1.02)';
+        speak('Listening for your command. Say set location to update your address.');
+      });
+      recognition.addEventListener('end', () => {
+        isListening = false;
+        micButton.setAttribute('aria-pressed', 'false');
+        micButton.style.transform = '';
+      });
+      recognition.addEventListener('result', (event) => {
+        const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase().trim();
+        if (transcript.includes('set location') || transcript.includes('set my location')) {
+          locateCurrentAddress();
+        } else if (transcript.includes('locate current address')) {
+          locateCurrentAddress();
+        } else {
+          speak('Command not recognized. Say set location to update your current address.');
+        }
+      });
+      recognition.addEventListener('error', (event) => {
+        speak('Speech recognition error. Please check microphone access.');
+      });
+    }
+
+    micButton.addEventListener('click', () => {
+      if (!recognition) {
+        initRecognition();
+      }
+      if (!recognition) {
+        return;
+      }
+      if (isListening) {
+        recognition.stop();
+        return;
+      }
+      recognition.start();
+    });
+  </script>
+</body>
+</html>

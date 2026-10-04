@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Locations | PremiumVilla India</title>
+  <style>
+    :root {
+      --black: #050505;
+      --charcoal: #10100f;
+      --panel: #171410;
+      --gold: #d8a945;
+      --gold-light: #f4d78a;
+      --line: #3a2f1b;
+      --text: #fff8e8;
+      --muted: #c7b68f;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--black);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .back-link {
+      color: var(--gold-light);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: var(--gold-light);
+      margin-top: 0;
+    }
+
+    .location-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .location-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .location-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--gold);
+    }
+
+    .location-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .location-content {
+      padding: 24px;
+    }
+
+    .location-content h3 {
+      color: var(--gold-light);
+      margin: 0 0 8px;
+      font-size: 1.6rem;
+    }
+
+    .location-content p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 15px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(216, 169, 69, 0.15);
+      color: var(--gold-light);
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Presence Across India</h1>
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </header>
+
+  <div class="location-grid">
+    <div class="location-card">
+      <img src="https://images.unsplash.com/photo-1567157577867-05ccb1388e6e?auto=format&fit=crop&w=800&q=80" alt="Mumbai Luxury Skyline">
+      <div class="location-content">
+        <span class="tag">Luxury Hotels</span>
+        <h3>Mumbai</h3>
+        <p>Elite high-rise suites and premium corporate banquet halls in the heart of the financial capital.</p>
+      </div>
+    </div>
+
+    <div class="location-card">
+      <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80" alt="Goa Beach">
+      <div class="location-content">
+        <span class="tag">Beach Resorts</span>
+        <h3>Goa</h3>
+        <p>Private coastal villas and sunset resort escapes for destination weddings and relaxed stays.</p>
+      </div>
+    </div>
+
+    <div class="location-card">
+      <img src="https://images.unsplash.com/photo-1622650882424-d2324707297e?auto=format&fit=crop&w=800&q=80" alt="Udaipur Royal Palace">
+      <div class="location-content">
+        <span class="tag">Royal Banquets</span>
+        <h3>Udaipur</h3>
+        <p>Palatial banquet halls and heritage villas designed for the most opulent celebrations in India.</p>
+      </div>
+    </div>
+
+    <div class="location-card">
+      <img src="https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=800&q=80" alt="Bangalore Skyline">
+      <div class="location-content">
+        <span class="tag">Business Stays</span>
+        <h3>Bangalore</h3>
+        <p>Tech-integrated corporate resorts and modern luxury suites for the discerning business traveler.</p>
+      </div>
+    </div>
+
+    <div class="location-card">
+      <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80" alt="Delhi Heritage">
+      <div class="location-content">
+        <span class="tag">Luxury Villas</span>
+        <h3>New Delhi</h3>
+        <p>Sprawling farm villas and grand banquet estates providing a blend of heritage and modern luxury.</p>
+      </div>
+    </div>
+
+    <div class="location-card">
+      <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80" alt="Jaipur Hawa Mahal">
+      <div class="location-content">
+        <span class="tag">Heritage Stays</span>
+        <h3>Jaipur</h3>
+        <p>Experience the Pink City with our boutique heritage hotels and grand celebration lawns.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

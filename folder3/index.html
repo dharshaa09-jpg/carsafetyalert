@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doctors Near Me</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="medical-corner-logo" href="index.html" aria-label="Doctors Near Me home">
+    <img src="medical-symbol-logo.png" alt="Medical symbol logo">
+  </a>
+
+  <div class="container">
+    <header class="topbar">
+      <div class="brand">
+        <div>
+          <h1>Doctors Near Me</h1>
+          <p>Search nearby doctors, view specialties, and book appointments quickly.</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="doctors.html">Book Appointment</a>
+        <a href="protocol.html">Health Tips</a>
+        <a href="../folder4/index.html">Reception</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero hero-doc">
+        <div class="hero-copy">
+          <p class="eyebrow">Find care fast</p>
+          <h2>Locate doctors near you and get help quickly.</h2>
+          <p>Filter by specialty, availability, or location and connect with trusted healthcare providers in your area.</p>
+          <div class="hero-actions">
+            <a href="doctors.html" class="button primary">Book Appointment</a>
+            <button type="button" id="searchButton" class="button secondary">Search Doctors</button>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="status-card">
+            <span class="status-label">Live directory</span>
+            <strong>4 doctors available</strong>
+            <p>Appointment requests submitted here are sent to the Patient Near Us receptionist dashboard.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="search-panel" id="searchPanel">
+        <div class="search-row">
+          <div class="search-field">
+            <label for="searchName">Search by name or specialty</label>
+            <input id="searchName" type="text" placeholder="Pediatrician, cardiologist, Dr. Mehta" />
+          </div>
+          <div class="search-field">
+            <label for="searchLocation">Location</label>
+            <input id="searchLocation" type="text" placeholder="City or neighborhood" />
+          </div>
+          <div class="search-field">
+            <label for="searchAvailability">Availability</label>
+            <select id="searchAvailability">
+              <option value="">Any</option>
+              <option value="Available now">Available now</option>
+              <option value="On call">On call</option>
+              <option value="By appointment">By appointment</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="doctors-section">
+        <div class="section-header">
+          <div>
+            <h2>Doctors Near You</h2>
+            <p id="resultSummary">Showing all nearby providers.</p>
+          </div>
+          <button type="button" class="button secondary" id="resetFilters">Reset Filters</button>
+        </div>
+
+        <div class="doctor-grid" id="doctorGrid"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

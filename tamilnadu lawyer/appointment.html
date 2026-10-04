@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Book Appointment - Tamil Nadu Lawyer Finder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">⚖️ Tamil Nadu Lawyer Finder</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="lawyers.html">Find Lawyers</a></li>
+                <li><a href="appointment.html">Book Appointment</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section style="text-align: center; padding: 100px 20px; color: white;">
+        <h1 style="font-size: 48px; font-weight: 800;">Secure Your Legal Consultation</h1>
+        <p style="font-size: 20px; margin: 20px 0; color: #bdc3c7;">Connect with top-tier advocates across Tamil Nadu.</p>
+        <button class="search-box button" style="padding: 18px 45px; font-size: 18px; background: #27ae60; color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.3);" onclick="openBookingModal()">
+            Schedule Appointment
+        </button>
+    </section>
+
+    <!-- The Booking Modal (Small Box) -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeBookingModal()">&times;</span>
+            <h2 id="modalTitle">Appointment Details</h2>
+            
+            <form id="appointmentForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label>Select Lawyer</label>
+                    <select id="lawyerSelect" required>
+                        <option value="Advocate Rajesh">Advocate Rajesh (Chennai)</option>
+                        <option value="Advocate Priya">Advocate Priya (Madurai)</option>
+                        <option value="Advocate Kumar">Advocate Kumar (Coimbatore)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Attach Case File (Optional)</label>
+                    <input type="file" id="caseFile" accept=".pdf,.doc,.docx">
+                </div>
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <div class="payment-options">
+                        <label><input type="radio" name="payment" value="Online" checked> Online</label>
+                        <label><input type="radio" name="payment" value="Offline"> Offline (at Chamber)</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">Confirm & Pay</button>
+            </form>
+
+            <!-- Online Payment Selection Step -->
+            <div id="paymentMethodsStep" class="hidden">
+                <p>Choose your online payment provider:</p>
+                <div class="payment-methods-grid">
+                    <button type="button" class="pay-method-btn" onclick="showUPIDetails('GPay')">Google Pay</button>
+                    <button type="button" class="pay-method-btn" onclick="showUPIDetails('PhonePe')">PhonePe</button>
+                    <button type="button" class="pay-method-btn" onclick="showUPIDetails('Paytm')">Paytm</button>
+                    <button type="button" class="pay-method-btn" onclick="showCardDetails()">ATM / Credit Card</button>
+                </div>
+            </div>
+
+            <!-- Card Details Form -->
+            <div id="cardDetailsStep" class="hidden">
+                <div class="form-group">
+                    <label>Cardholder Name</label>
+                    <input type="text" placeholder="Name as on card">
+                </div>
+                <div class="form-group">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+                </div>
+                <div class="card-form-grid">
+                    <div class="form-group">
+                        <label>Expiry Date</label>
+                        <input type="text" placeholder="MM/YY">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="password" placeholder="***" maxlength="3">
+                    </div>
+                </div>
+                <button class="btn-submit" onclick="finishPayment()">Secure Pay</button>
+            </div>
+
+            <!-- UPI / QR Display -->
+            <div id="upiDetailsStep" class="hidden qr-container">
+                <p>Scan this QR with <strong id="selectedUpiApp"></strong> to complete payment</p>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TN_LAWYER_PAY" class="qr-img" alt="QR Code">
+                <button class="btn-submit" onclick="finishPayment()">Confirm Payment Done</button>
+            </div>
+
+            <!-- Token Display (Initially Hidden) -->
+            <div id="tokenResult" class="token-box">
+                <h3 style="color: green;">✔ Booking Confirmed!</h3>
+                <p>Please present this token at the chamber.</p>
+                <span class="token-number" id="displayToken"></span>
+                <p><strong>Lawyer:</strong> <span id="displayLawyer"></span></p>
+                <p><strong>Location:</strong> <span id="displayLocation"></span></p>
+                <button class="btn-submit" style="margin-top: 15px; background: #666;" onclick="window.print()">Print Token</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openBookingModal() {
+            document.getElementById('bookingModal').style.display = 'flex';
+            document.getElementById('appointmentForm').classList.remove('hidden');
+            document.getElementById('paymentMethodsStep').classList.add('hidden');
+            document.getElementById('cardDetailsStep').classList.add('hidden');
+            document.getElementById('upiDetailsStep').classList.add('hidden');
+            document.getElementById('tokenResult').style.display = 'none';
+            document.getElementById('modalTitle').innerText = "Appointment Details";
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+        }
+
+        function showUPIDetails(app) {
+            document.getElementById('paymentMethodsStep').classList.add('hidden');
+            document.getElementById('upiDetailsStep').classList.remove('hidden');
+            document.getElementById('modalTitle').innerText = "Scan & Pay";
+            document.getElementById('selectedUpiApp').innerText = app;
+        }
+
+        function showCardDetails() {
+            document.getElementById('paymentMethodsStep').classList.add('hidden');
+            document.getElementById('cardDetailsStep').classList.remove('hidden');
+            document.getElementById('modalTitle').innerText = "ATM Card Details";
+        }
+
+        function finishPayment() {
+            document.getElementById('cardDetailsStep').classList.add('hidden');
+            document.getElementById('upiDetailsStep').classList.add('hidden');
+            showToken();
+        }
+
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const paymentType = document.querySelector('input[name="payment"]:checked').value;
+            
+            if (paymentType === 'Online') {
+                document.getElementById('appointmentForm').classList.add('hidden');
+                document.getElementById('paymentMethodsStep').classList.remove('hidden');
+                document.getElementById('modalTitle').innerText = "Select Online Payment";
+            } else {
+                showToken();
+            }
+        });
+
+        function showToken() {
+            const lawyer = document.getElementById('lawyerSelect').value;
+            document.getElementById('appointmentForm').classList.add('hidden');
+            document.getElementById('paymentMethodsStep').classList.add('hidden');
+
+            const locations = {
+                "Advocate Rajesh": "Chennai High Court, Chamber 402",
+                "Advocate Priya": "Madurai Bench Office, Block B",
+                "Advocate Kumar": "Combined Court Complex, Coimbatore"
+            };
+
+            // Generate random token
+            const tokenNum = "TNL-" + Math.floor(1000 + Math.random() * 9000);
+
+            // UI Switch
+            document.getElementById('modalTitle').innerText = "Your Token";
+            document.getElementById('tokenResult').style.display = 'block';
+            
+            document.getElementById('displayToken').innerText = tokenNum;
+            document.getElementById('displayLawyer').innerText = lawyer;
+            document.getElementById('displayLocation').innerText = locations[lawyer];
+        }
+    </script>
+
+</body>
+</html>

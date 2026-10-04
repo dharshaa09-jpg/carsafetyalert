@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PremiumVilla | Banquet Hall, Luxury Hotel & Resort</title>
+  <style>
+    :root {
+      --black: #050505;
+      --charcoal: #10100f;
+      --panel: #171410;
+      --gold: #d8a945;
+      --gold-light: #f4d78a;
+      --line: #3a2f1b;
+      --text: #fff8e8;
+      --muted: #c7b68f;
+      --cream: #fff4d8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--black);
+      color: var(--text);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 20;
+      opacity: 0.42;
+      background-image:
+        radial-gradient(circle, rgba(255, 245, 190, 0.95) 0 1px, transparent 1.6px),
+        radial-gradient(circle, rgba(216, 169, 69, 0.76) 0 1px, transparent 1.8px),
+        radial-gradient(circle, rgba(255, 255, 255, 0.72) 0 0.8px, transparent 1.4px);
+      background-position: 20px 30px, 90px 110px, 150px 70px;
+      background-size: 180px 180px, 240px 240px, 130px 130px;
+      animation: glitterDrift 9s linear infinite;
+    }
+
+    @keyframes glitterDrift {
+      0% {
+        background-position: 20px 30px, 90px 110px, 150px 70px;
+      }
+      100% {
+        background-position: 200px 210px, 330px 350px, 280px 200px;
+      }
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px clamp(18px, 5vw, 76px);
+      background: rgba(5, 5, 5, 0.82);
+      border-bottom: 1px solid rgba(216, 169, 69, 0.28);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      color: var(--text);
+      text-decoration: none;
+      padding: 7px 10px;
+      border: 1px solid rgba(216, 169, 69, 0.38);
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255, 244, 191, 0.28) 0 1px, transparent 2px),
+        radial-gradient(circle at 84% 68%, rgba(244, 215, 138, 0.24) 0 1px, transparent 2px),
+        linear-gradient(135deg, #050505, #16120a);
+      box-shadow: 0 0 28px rgba(216, 169, 69, 0.2), inset 0 0 18px rgba(216, 169, 69, 0.08);
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--gold-light);
+      color: var(--gold-light);
+      background:
+        radial-gradient(circle at 20% 18%, #fff8d2 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 76% 28%, #f4d78a 0 1px, transparent 2px),
+        radial-gradient(circle at 58% 82%, #fff4bf 0 1.2px, transparent 2.2px),
+        linear-gradient(145deg, #000, #1a1308 48%, #050505);
+      font-weight: 900;
+      border-radius: 6px;
+      letter-spacing: 0;
+      box-shadow: 0 0 24px rgba(216, 169, 69, 0.56), inset 0 0 18px rgba(216, 169, 69, 0.28);
+      text-shadow: 0 0 10px rgba(244, 215, 138, 0.9);
+    }
+
+    .brand strong {
+      font-size: clamp(1.25rem, 2vw, 1.65rem);
+      letter-spacing: 0;
+    }
+
+    .brand span {
+      color: var(--gold-light);
+    }
+
+    .brand strong {
+      font-weight: 900;
+      color: transparent;
+      background:
+        radial-gradient(circle at 14% 35%, #fff8d2 0 1px, transparent 2px),
+        radial-gradient(circle at 72% 62%, #fff1b5 0 1px, transparent 2px),
+        linear-gradient(90deg, #050505 0%, #ad7b1c 18%, #fff1b5 42%, #d8a945 62%, #050505 100%);
+      background-size: 110px 42px, 150px 42px, 240% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: goldShimmer 4.5s ease-in-out infinite;
+      text-shadow: 0 0 20px rgba(216, 169, 69, 0.32);
+    }
+
+    .brand strong span {
+      color: transparent;
+    }
+
+    h1,
+    .section-head h2,
+    .feature-list h2,
+    .booking-copy h2 {
+      color: transparent;
+      background: linear-gradient(90deg, #9a6b16, #fff1b5, #d8a945, #fff8d2, #b9821d);
+      background-size: 240% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: goldShimmer 5s ease-in-out infinite;
+      text-shadow: 0 0 28px rgba(216, 169, 69, 0.22);
+    }
+
+    @keyframes goldShimmer {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      padding: 9px 11px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: var(--gold-light);
+      border-color: rgba(216, 169, 69, 0.46);
+    }
+
+    .book-link {
+      color: var(--black);
+      background: linear-gradient(135deg, #a57418, #f8d77b, #fff4bf, #c99023);
+      font-weight: 800;
+      box-shadow: 0 0 18px rgba(216, 169, 69, 0.34);
+    }
+
+    .hero {
+      min-height: 94vh;
+      display: grid;
+      align-items: end;
+      position: relative;
+      padding: 112px clamp(18px, 5vw, 76px) 54px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.42) 48%, rgba(0, 0, 0, 0.18)),
+        linear-gradient(0deg, rgba(5, 5, 5, 0.96), rgba(5, 5, 5, 0.1) 38%),
+        url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1800&q=85") center/cover;
+      z-index: -2;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 120px;
+      background: linear-gradient(180deg, transparent, var(--black));
+      z-index: -1;
+    }
+
+    .hero-content {
+      max-width: 760px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      padding: 8px 12px;
+      border: 1px solid rgba(244, 215, 138, 0.7);
+      border-radius: 999px;
+      color: var(--gold-light);
+      background: rgba(0, 0, 0, 0.36);
+      font-weight: 800;
+      font-size: 0.92rem;
+      box-shadow: inset 0 0 18px rgba(216, 169, 69, 0.16), 0 0 24px rgba(216, 169, 69, 0.16);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 9vw, 7.8rem);
+      line-height: 0.92;
+      letter-spacing: 0;
+    }
+
+    .hero-content p {
+      max-width: 650px;
+      color: #eadbb5;
+      font-size: clamp(1.03rem, 2vw, 1.25rem);
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 6px;
+      padding: 13px 17px;
+      color: var(--black);
+      background: linear-gradient(135deg, #916616, #f8d77b 42%, #fff4bf 52%, #c99023);
+      background-size: 180% 100%;
+      text-decoration: none;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 0 24px rgba(216, 169, 69, 0.34);
+      animation: goldShimmer 6s ease-in-out infinite;
+    }
+
+    .btn.secondary {
+      color: var(--gold-light);
+      background: rgba(0, 0, 0, 0.42);
+      border: 1px solid rgba(244, 215, 138, 0.52);
+    }
+
+    main {
+      background: var(--black);
+    }
+
+    section {
+      padding: 62px clamp(18px, 5vw, 76px);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      line-height: 1;
+      max-width: 680px;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      max-width: 540px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .venue-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .venue-list article {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(145deg, #171410, #0d0c0b);
+      box-shadow: 0 0 26px rgba(216, 169, 69, 0.08);
+    }
+
+    .venue-list h3 {
+      margin-bottom: 12px;
+      color: var(--gold-light);
+      font-size: 1.2rem;
+    }
+
+    .venue-list ul {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .price {
+      display: block;
+      margin-top: 3px;
+      color: var(--gold-light);
+      font-weight: 900;
+    }
+
+    .experience-card {
+      min-height: 520px;
+      display: grid;
+      grid-template-rows: minmax(280px, 1fr) auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--panel);
+      box-shadow: 0 0 0 1px rgba(244, 215, 138, 0.05), 0 24px 70px rgba(0, 0, 0, 0.3);
+    }
+
+    .experience-card figure {
+      margin: 0;
+      min-height: 280px;
+    }
+
+    .experience-card div {
+      padding: 20px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .experience-card h3 {
+      color: var(--gold-light);
+      font-size: 1.45rem;
+      text-shadow: 0 0 18px rgba(216, 169, 69, 0.28);
+    }
+
+    .experience-card p {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 24px;
+      align-items: stretch;
+      background: var(--charcoal);
+      border-top: 1px solid rgba(216, 169, 69, 0.18);
+      border-bottom: 1px solid rgba(216, 169, 69, 0.18);
+    }
+
+    .feature-media {
+      min-height: 580px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 14px;
+      align-content: center;
+    }
+
+    .feature-list h2 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1;
+    }
+
+    .feature-list > p {
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 660px;
+    }
+
+    .amenities {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .amenity {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      align-items: start;
+      min-height: 116px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #0d0d0c;
+    }
+
+    .amenity-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #8f6518, #ffe9a9, #d8a945);
+      color: var(--black);
+      font-weight: 900;
+      box-shadow: 0 0 18px rgba(216, 169, 69, 0.34);
+    }
+
+    .amenity strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .amenity span {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.95rem;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-rows: repeat(2, 260px);
+      gap: 14px;
+    }
+
+    .gallery figure {
+      margin: 0;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .gallery figure:first-child {
+      grid-row: span 2;
+    }
+
+    .gallery figcaption {
+      position: absolute;
+      inset: auto 12px 12px;
+      padding: 9px 11px;
+      border-radius: 5px;
+      color: var(--black);
+      background: linear-gradient(135deg, rgba(244, 215, 138, 0.96), rgba(216, 169, 69, 0.94));
+      font-weight: 900;
+      box-shadow: 0 0 18px rgba(216, 169, 69, 0.3);
+    }
+
+    .booking {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .booking-copy {
+      display: grid;
+      gap: 18px;
+      padding: 24px 0;
+    }
+
+    .booking-copy h2 {
+      font-size: clamp(2.1rem, 5vw, 4rem);
+      line-height: 1;
+    }
+
+    .booking-copy p {
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 560px;
+    }
+
+    .booking-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .booking-stats div {
+      min-height: 92px;
+      padding: 14px;
+      border-left: 3px solid var(--gold);
+      background: var(--panel);
+    }
+
+    .booking-stats strong {
+      display: block;
+      color: var(--gold-light);
+      font-size: 1.5rem;
+    }
+
+    .booking-stats span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+      padding: clamp(18px, 3vw, 28px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .form-status {
+      display: none;
+      padding: 13px 14px;
+      border: 1px solid rgba(244, 215, 138, 0.54);
+      border-radius: 6px;
+      color: var(--cream);
+      background: rgba(216, 169, 69, 0.12);
+      line-height: 1.45;
+    }
+
+    .form-status.show {
+      display: block;
+    }
+
+    .payment-box {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid rgba(216, 169, 69, 0.42);
+      border-radius: 8px;
+      background: rgba(216, 169, 69, 0.08);
+    }
+
+    .payment-total {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .payment-total div {
+      padding: 12px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.34);
+      border: 1px solid rgba(244, 215, 138, 0.2);
+    }
+
+    .payment-total span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 4px;
+    }
+
+    .payment-total strong {
+      color: var(--gold-light);
+      font-size: 1.2rem;
+    }
+
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .payment-methods label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #090909;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .payment-methods input {
+      width: auto;
+      accent-color: var(--gold);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #53421f;
+      border-radius: 6px;
+      background: #090909;
+      color: var(--text);
+      padding: 12px 13px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(216, 169, 69, 0.16);
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding: 26px clamp(18px, 5vw, 76px);
+      color: var(--muted);
+      border-top: 1px solid rgba(216, 169, 69, 0.24);
+      background: #030303;
+    }
+
+    @media (max-width: 980px) {
+      .site-header,
+      .section-head,
+      footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      nav {
+        justify-content: flex-start;
+      }
+
+      .experience-grid,
+      .venue-list,
+      .features,
+      .booking {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-media {
+        min-height: 420px;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 260px);
+      }
+
+      .gallery figure:first-child {
+        grid-row: span 1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .site-header {
+        position: static;
+      }
+
+      .hero {
+        min-height: 760px;
+        padding-top: 42px;
+      }
+
+      .hero::before {
+        background:
+          linear-gradient(0deg, rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.28)),
+          url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=82") center/cover;
+      }
+
+      section {
+        padding-block: 44px;
+      }
+
+      .amenities,
+      .form-grid,
+      .payment-total,
+      .payment-methods,
+      .booking-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .experience-card {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="PremiumVilla home">
+      <span class="brand-mark">PV</span>
+      <strong>Premium<span>Villa</span></strong>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#venues">Venues</a>
+      <a href="locations.html">Locations</a>
+      <a href="#luxury">Luxury</a>
+      <a href="#gallery">Gallery</a>
+      <a class="book-link" href="#booking">Book Now</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <span class="eyebrow">Banquet Hall, Luxury Hotel & Resort</span>
+        <h1>PremiumVilla</h1>
+        <p>Host grand celebrations, stay in elegant suites, and unwind in resort spaces designed for weddings, corporate retreats, family vacations, and private luxury escapes.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#booking">Reserve Your Date</a>
+          <a class="btn secondary" href="venues.html">Explore Venues</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="venues">
+      <div class="section-head">
+        <h2>High class spaces for every occasion.</h2>
+        <p>PremiumVilla brings together a grand banquet hall, luxury hotel rooms, and a resort setting with polished service from arrival to farewell.</p>
+      </div>
+
+      <div class="experience-grid">
+        <article class="experience-card">
+          <a href="details.html?type=vip" aria-label="View Luxury VIP Card details">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1000&q=85" alt="Gold VIP membership card on a dark surface">
+            </figure>
+          </a>
+          <div>
+            <h3>Luxury VIP Card</h3>
+            <p>Exclusive elite status for customers booking over ₹2,00,000. Includes priority upgrades, private butler service, and exclusive lounge access across all venues.</p>
+          </div>
+        </article>
+
+        <article class="experience-card">
+          <a href="details.html?type=banquet" aria-label="View Banquet Hall details">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1519167758481-83f29c8cf8ea?auto=format&fit=crop&w=1000&q=85" alt="Golden banquet hall prepared for a premium wedding reception">
+            </figure>
+          </a>
+          <div>
+            <h3>Premium Banquet Hall</h3>
+            <p>A grand celebration hall with chandelier lighting, rich seating, stage decor, premium dining service, and space for weddings, receptions, engagements, and award nights.</p>
+          </div>
+        </article>
+
+        <article class="experience-card">
+          <a href="details.html?type=hotel" aria-label="View Luxury Hotel details">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=85" alt="Luxury hotel suite with elegant bedding and warm lights">
+            </figure>
+          </a>
+          <div>
+            <h3>Luxury Hotel</h3>
+            <p>Quiet suites, private dining, concierge assistance, spa-style bathrooms, and a refined atmosphere for guests who expect comfort with class.</p>
+          </div>
+        </article>
+
+        <article class="experience-card">
+          <a href="details.html?type=resort" aria-label="View Resort Escape details">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1000&q=85" alt="Luxury resort pool beside modern villas">
+            </figure>
+          </a>
+          <div>
+            <h3>Resort Escape</h3>
+            <p>Poolside lounging, garden evenings, villa-style stays, curated meals, and resort experiences for families, couples, teams, and destination events.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="venue-list" aria-label="PremiumVilla venue list">
+        <article>
+          <h3>VIP Membership</h3>
+          <ul>
+            <li>Gold VIP Status - bookings over 2L <span class="price">Complementary</span></li>
+            <li>Platinum Butler - on-demand service <span class="price">₹75,000 / year</span></li>
+            <li>Diamond Global - all-access pass <span class="price">₹1,50,000 / year</span></li>
+          </ul>
+        </article>
+        <article>
+          <h3>Banquet Hall List</h3>
+          <ul>
+            <li>Royal Grand Banquet Hall - weddings and receptions <span class="price">₹2,50,000</span></li>
+            <li>Crystal Ballroom - engagement and birthday events <span class="price">₹1,80,000</span></li>
+            <li>Imperial Conference Hall - corporate meetings and award nights <span class="price">₹1,25,000</span></li>
+            <li>Garden Celebration Lawn - outdoor dinner and party setup <span class="price">₹95,000</span></li>
+          </ul>
+        </article>
+
+        <article>
+          <h3>Luxury Hotel List</h3>
+          <ul>
+            <li>Royal Suite - premium king room with lounge seating <span class="price">₹18,000 / night</span></li>
+            <li>Executive Deluxe Room - business and family stays <span class="price">₹12,000 / night</span></li>
+            <li>Presidential Suite - private luxury stay with balcony <span class="price">₹45,000 / night</span></li>
+            <li>Family Premium Room - spacious room for group guests <span class="price">₹16,000 / night</span></li>
+          </ul>
+        </article>
+
+        <article>
+          <h3>Resort List</h3>
+          <ul>
+            <li>Poolside Resort Villa - private villa near the pool <span class="price">₹30,000 / night</span></li>
+            <li>Garden View Cottage - calm resort stay with green views <span class="price">₹14,000 / night</span></li>
+            <li>Honeymoon Villa - romantic private stay package <span class="price">₹38,000</span></li>
+            <li>Weekend Family Resort Package - stay, food, and activities <span class="price">₹65,000</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="features" id="luxury">
+      <figure class="feature-media">
+        <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1200&q=85" alt="Premium hotel lobby with golden lighting and black marble details">
+      </figure>
+
+      <div class="feature-list">
+        <h2>Golden service, black-tie polish.</h2>
+        <p>From the first walkthrough to the final checkout, PremiumVilla is built for guests who want a smooth, high-class experience without compromise.</p>
+
+        <div class="amenities">
+          <div class="amenity">
+            <span class="amenity-mark">01</span>
+            <div>
+              <strong>Grand Entry</strong>
+              <span>Valet-style arrival, decorated welcome zone, and guest reception support.</span>
+            </div>
+          </div>
+          <div class="amenity">
+            <span class="amenity-mark">02</span>
+            <div>
+              <strong>Fine Dining</strong>
+              <span>Multi-cuisine menus, plated service, buffet counters, and dessert stations.</span>
+            </div>
+          </div>
+          <div class="amenity">
+            <span class="amenity-mark">03</span>
+            <div>
+              <strong>Suite Stays</strong>
+              <span>Premium bedding, room service, lounge seating, and private balconies.</span>
+            </div>
+          </div>
+          <div class="amenity">
+            <span class="amenity-mark">04</span>
+            <div>
+              <strong>Event Planning</strong>
+              <span>Decor coordination, seating plans, photography zones, and timeline support.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <div class="section-head">
+        <h2>Designed to look expensive from every angle.</h2>
+        <p>Use PremiumVilla for wedding functions, company dinners, destination weekends, anniversary stays, and VIP gatherings.</p>
+      </div>
+
+      <div class="gallery">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=1300&q=85" alt="Luxury outdoor wedding dinner setting">
+          <figcaption>Wedding Lawn</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=900&q=85" alt="Elegant luxury hotel room interior">
+          <figcaption>Royal Suite</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85" alt="Resort pool and villa buildings at sunset">
+          <figcaption>Resort Pool</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="booking" id="booking">
+      <div class="booking-copy">
+        <span class="eyebrow">Private bookings open</span>
+        <h2>Plan a celebration with presence.</h2>
+        <p>Share your event details and PremiumVilla will prepare a tailored banquet, hotel, or resort package with venue availability and guest capacity.</p>
+
+        <div class="booking-stats" aria-label="PremiumVilla property highlights">
+          <div>
+            <strong>900+</strong>
+            <span>Guest banquet capacity</span>
+          </div>
+          <div>
+            <strong>64</strong>
+            <span>Luxury rooms and suites</span>
+          </div>
+          <div>
+            <strong>24/7</strong>
+            <span>Guest service desk</span>
+          </div>
+        </div>
+      </div>
+
+      <form id="quoteForm">
+        <div class="form-grid">
+          <label>
+            Full Name
+            <input id="guestName" type="text" placeholder="Enter your name" required>
+          </label>
+          <label>
+            Phone Number
+            <input id="guestPhone" type="tel" placeholder="Enter phone number" required>
+          </label>
+          <label>
+            Package
+            <select id="packageType">
+              <option value="Royal Grand Banquet Hall" data-price="250000">Royal Grand Banquet Hall - ₹2,50,000</option>
+              <option value="Crystal Ballroom" data-price="180000">Crystal Ballroom - ₹1,80,000</option>
+              <option value="Imperial Conference Hall" data-price="125000">Imperial Conference Hall - ₹1,25,000</option>
+              <option value="Garden Celebration Lawn" data-price="95000">Garden Celebration Lawn - ₹95,000</option>
+              <option value="Royal Suite" data-price="18000">Royal Suite - ₹18,000 / night</option>
+              <option value="Executive Deluxe Room" data-price="12000">Executive Deluxe Room - ₹12,000 / night</option>
+              <option value="Presidential Suite" data-price="45000">Presidential Suite - ₹45,000 / night</option>
+              <option value="Family Premium Room" data-price="16000">Family Premium Room - ₹16,000 / night</option>
+              <option value="Poolside Resort Villa" data-price="30000">Poolside Resort Villa - ₹30,000 / night</option>
+              <option value="Garden View Cottage" data-price="14000">Garden View Cottage - ₹14,000 / night</option>
+              <option value="Honeymoon Villa" data-price="38000">Honeymoon Villa - ₹38,000</option>
+              <option value="Weekend Family Resort Package" data-price="65000">Weekend Family Resort Package - ₹65,000</option>
+            </select>
+          </label>
+          <label>
+            Event Date
+            <input id="eventDate" type="date" required>
+          </label>
+        </div>
+        <label>
+          Requirements
+          <textarea id="requirements" placeholder="Guest count, room needs, food preference, decor style..."></textarea>
+        </label>
+        <div class="payment-box">
+          <div class="payment-total" aria-label="Payment price details">
+            <div>
+              <span>Package Price</span>
+              <strong id="packagePrice">₹2,50,000</strong>
+            </div>
+            <div>
+              <span>Advance Payment</span>
+              <strong id="advancePrice">₹50,000</strong>
+            </div>
+            <div>
+              <span>Balance at Venue</span>
+              <strong id="balancePrice">₹2,00,000</strong>
+            </div>
+          </div>
+
+          <label>
+            Payment Method
+            <div class="payment-methods">
+              <label><input type="radio" name="paymentMethod" value="UPI" checked> UPI</label>
+              <label><input type="radio" name="paymentMethod" value="Card"> Card</label>
+              <label><input type="radio" name="paymentMethod" value="Net Banking"> Net Banking</label>
+              <label><input type="radio" name="paymentMethod" value="Cash at Venue"> Cash</label>
+            </div>
+          </label>
+        </div>
+        <button class="btn" type="submit">Pay Advance & Request Quote</button>
+        <p class="form-status" id="formStatus" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <strong>PremiumVilla</strong>
+    <span>Golden hospitality for banquet events, luxury stays, and resort escapes.</span>
+  </footer>
+  <script>
+    const quoteForm = document.querySelector('#quoteForm');
+    const formStatus = document.querySelector('#formStatus');
+    const packageType = document.querySelector('#packageType');
+    const packagePrice = document.querySelector('#packagePrice');
+    const advancePrice = document.querySelector('#advancePrice');
+    const balancePrice = document.querySelector('#balancePrice');
+
+    function formatINR(amount) {
+      return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        maximumFractionDigits: 0
+      }).format(amount);
+    }
+
+    function selectedPackagePrice() {
+      return Number(packageType.selectedOptions[0].dataset.price);
+    }
+
+    function updatePaymentDetails() {
+      const total = selectedPackagePrice();
+      const advance = Math.round(total * 0.2);
+      const balance = total - advance;
+
+      packagePrice.textContent = formatINR(total);
+      advancePrice.textContent = formatINR(advance);
+      balancePrice.textContent = formatINR(balance);
+    }
+
+    packageType.addEventListener('change', updatePaymentDetails);
+
+    quoteForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      if (!quoteForm.checkValidity()) {
+        quoteForm.reportValidity();
+        return;
+      }
+
+      const guestName = document.querySelector('#guestName').value.trim();
+      const experienceType = packageType.value;
+      const eventDate = document.querySelector('#eventDate').value;
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+      const total = selectedPackagePrice();
+      const advance = Math.round(total * 0.2);
+
+      let msg = `Thank you, ${guestName}. Your ${experienceType} booking request for ${eventDate} is received. Advance payment: ${formatINR(advance)} by ${paymentMethod}. Total package price: ${formatINR(total)}.`;
+
+      if (total >= 200000) {
+        msg += " Congratulations! Your high-value booking qualifies you for our Luxury VIP Card.";
+      }
+
+      formStatus.textContent = msg + " Our PremiumVilla team will contact you soon.";
+      formStatus.classList.add('show');
+      quoteForm.reset();
+      updatePaymentDetails();
+    });
+
+    updatePaymentDetails();
+  </script>
+</body>
+</html>

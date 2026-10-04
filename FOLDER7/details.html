@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Venue Details | PremiumVilla</title>
+  <style>
+    :root {
+      --black: #050505;
+      --charcoal: #10100f;
+      --panel: #171410;
+      --gold: #d8a945;
+      --gold-light: #f4d78a;
+      --line: #3a2f1b;
+      --text: #fff8e8;
+      --muted: #c7b68f;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--black);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 40px;
+    }
+
+    .back-link {
+      color: var(--gold-light);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+
+    .venue-img {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: var(--gold-light);
+      margin-top: 0;
+    }
+
+    .price-tag {
+      font-size: 1.5rem;
+      color: var(--gold);
+      font-weight: bold;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .payment-section {
+      margin-top: 40px;
+      padding: 30px;
+      background: var(--panel);
+      border-radius: 12px;
+      border: 1px solid var(--line);
+    }
+
+    .payment-section h2 {
+      color: var(--gold-light);
+      margin-top: 0;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--muted);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      background: #000;
+      border: 1px solid var(--line);
+      color: #fff;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </header>
+
+  <div class="detail-grid">
+    <div class="visuals">
+      <img id="venueImg" src="" alt="Venue Image" class="venue-img">
+    </div>
+    <div class="info">
+      <h1 id="venueTitle">Loading...</h1>
+      <span class="price-tag" id="venuePrice"></span>
+      <p id="venueDesc"></p>
+
+      <div class="payment-section">
+        <h2>Secure Booking</h2>
+        <form id="paymentForm">
+          <div class="form-group">
+            <label>Check-in Date</label>
+            <input type="date" required>
+          </div>
+          <div class="form-group">
+            <label>Payment Method</label>
+            <select id="payMethod">
+              <option value="upi">UPI / GPay</option>
+              <option value="card">Credit / Debit Card</option>
+              <option value="net">Net Banking</option>
+            </select>
+          </div>
+          <div id="cardFields" style="display:none;">
+            <div class="form-group">
+              <label>Card Number</label>
+              <input type="text" placeholder="0000 0000 0000 0000">
+            </div>
+          </div>
+          <button type="submit" class="btn">Confirm & Pay</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const data = {
+    vip: {
+      title: "Luxury VIP Membership",
+      price: "₹2,00,000 (Min. Booking Threshold)",
+      desc: "Our exclusive VIP Membership is unlocked automatically for guests whose total booking value exceeds ₹2,00,000. It grants lifetime access to our luxury portfolio, personal travel assistants, and invitations to closed-door property launches and gala events.",
+      img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1000&q=85"
+    },
+    banquet: {
+      title: "Royal Banquet Hall",
+      price: "₹2,50,000",
+      desc: "Experience grandeur in our Royal Banquet Hall. Featuring opulent chandelier lighting, bespoke stage decorations, and premium multi-cuisine catering services. Perfect for weddings and high-profile corporate events.",
+      img: "https://images.unsplash.com/photo-1519167758481-83f29c8cf8ea?auto=format&fit=crop&w=1000&q=85"
+    },
+    hotel: {
+      title: "Luxury Suite",
+      price: "₹18,000 / night",
+      desc: "Relax in our signature Luxury Suites. Each room offers panoramic views, automated climate control, a private lounge area, and access to our 24/7 personalized concierge service.",
+      img: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=85"
+    },
+    villa: {
+      title: "Private Luxury Villa",
+      price: "₹45,000 / night",
+      desc: "Our Private Luxury Villas offer ultimate seclusion and premium amenities. Enjoy a personal infinity pool, dedicated butler service, and sprawling living spaces designed for high-end comfort.",
+      img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1000&q=85"
+    },
+    resort: {
+      title: "Resort Escape",
+      price: "₹30,000 / night",
+      desc: "Our Resort Escape villas provide a private sanctuary away from the city. Enjoy private pool access, tropical garden views, and curated outdoor dining experiences for the ultimate getaway.",
+      img: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1000&q=85"
+    }
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const type = params.get('type') || 'hotel';
+  const venue = data[type];
+
+  if (venue) {
+    document.getElementById('venueTitle').textContent = venue.title;
+    document.getElementById('venuePrice').textContent = venue.price;
+    document.getElementById('venueDesc').textContent = venue.desc;
+    document.getElementById('venueImg').src = venue.img;
+    document.title = `${venue.title} | PremiumVilla`;
+  }
+
+  // Simple Payment logic
+  const payMethod = document.getElementById('payMethod');
+  const cardFields = document.getElementById('cardFields');
+
+  payMethod.addEventListener('change', () => {
+    cardFields.style.display = payMethod.value === 'card' ? 'block' : 'none';
+  });
+
+  document.getElementById('paymentForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Processing your payment for the ' + venue.title + '... Please do not refresh the page.');
+    setTimeout(() => {
+      alert('Payment Successful! Your booking is confirmed.');
+      window.location.href = 'index.html';
+    }, 2000);
+  });
+</script>
+
+</body>
+</html>

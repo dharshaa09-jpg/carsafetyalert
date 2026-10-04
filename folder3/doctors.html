@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doctors Near Me</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="medical-corner-logo" href="index.html" aria-label="Doctors Near Me home">
+    <img src="medical-symbol-logo.png" alt="Medical symbol logo">
+  </a>
+
+  <div class="container">
+    <header class="topbar">
+      <div class="brand">
+        <div>
+          <h1>Doctors Near Me</h1>
+          <p>Find nearby medical professionals for emergency care.</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="protocol.html">Safety Protocol</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="panel">
+        <h2>Available Doctors</h2>
+        <p>Here are doctors currently on call for emergency consultation and treatment.</p>
+
+        <ul class="doctor-list">
+          <li class="doctor-card" data-doctor-id="1" data-doctor-name="Dr. Tamil Selvi" data-doctor-specialty="General Physician" data-hospital-id="central" data-hospital-name="Central Hospital" data-consultation-fee="500">
+            <div>
+              <h3>Dr. Tamil Selvi</h3>
+              <p>Speciality: General Physician</p>
+              <p>Hospital: Central Hospital</p>
+              <p>Consultant Fee: Rs. 500</p>
+              <p>Contact: <a href="tel:1234567890">123-456-7890</a></p>
+            </div>
+            <button class="button primary book-doctor" type="button">Book Appointment</button>
+          </li>
+          <li class="doctor-card" data-doctor-id="2" data-doctor-name="Dr. Ravi Kumar" data-doctor-specialty="Cardiologist" data-hospital-id="heartcare" data-hospital-name="Heart Care Clinic" data-consultation-fee="900">
+            <div>
+              <h3>Dr. Ravi Kumar</h3>
+              <p>Speciality: Cardiologist</p>
+              <p>Hospital: Heart Care Clinic</p>
+              <p>Consultant Fee: Rs. 900</p>
+              <p>Contact: <a href="tel:3546243729">354-624-3729</a></p>
+            </div>
+            <button class="button primary book-doctor" type="button">Book Appointment</button>
+          </li>
+          <li class="doctor-card" data-doctor-id="3" data-doctor-name="Dr. Anjali Mehta" data-doctor-specialty="Orthopedic Surgeon" data-hospital-id="cityortho" data-hospital-name="City Ortho Center" data-consultation-fee="800">
+            <div>
+              <h3>Dr. Anjali Mehta</h3>
+              <p>Speciality: Orthopedic Surgeon</p>
+              <p>Hospital: City Ortho Center</p>
+              <p>Consultant Fee: Rs. 800</p>
+              <p>Contact: <a href="tel:3546243729">354-624-3729</a></p>
+            </div>
+            <button class="button primary book-doctor" type="button">Book Appointment</button>
+          </li>
+          <li class="doctor-card" data-doctor-id="4" data-doctor-name="Dr. Brindha" data-doctor-specialty="Pediatrician" data-hospital-id="childcare" data-hospital-name="Children Care Hospital" data-consultation-fee="600">
+            <div>
+              <h3>Dr. Brindha</h3>
+              <p>Speciality: Pediatrician</p>
+              <p>Hospital: Children Care Hospital</p>
+              <p>Consultant Fee: Rs. 600</p>
+              <p>Contact: <a href="tel:3481023948">348-102-3948</a></p>
+            </div>
+            <button class="button primary book-doctor" type="button">Book Appointment</button>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <!-- Patient Details Modal -->
+  <div id="patientModal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content patient-form-modal">
+      <div class="modal-header">
+        <h2>Patient Details & Appointment</h2>
+        <button class="close-btn" id="closeModal">&times;</button>
+      </div>
+
+      <div class="selected-doctor-info">
+        <p><strong>Selected Doctor:</strong> <span id="selectedDoctorName"></span></p>
+        <p><strong>Specialty:</strong> <span id="selectedDoctorSpecialty"></span></p>
+        <p><strong>Hospital:</strong> <span id="selectedHospitalName"></span></p>
+        <p><strong>Consultant Fee:</strong> Rs. <span id="selectedConsultationFee"></span></p>
+      </div>
+
+      <form id="patientForm" class="patient-form">
+        <!-- Personal Information -->
+        <fieldset class="form-section">
+          <legend>Personal Information</legend>
+          
+          <div class="form-group">
+            <label for="patientName">Full Name *</label>
+            <input type="text" id="patientName" name="patientName" required placeholder="Enter your full name" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="patientAge">Age *</label>
+              <input type="number" id="patientAge" name="patientAge" min="1" max="150" required placeholder="Age" />
+            </div>
+            <div class="form-group">
+              <label for="patientGender">Gender *</label>
+              <select id="patientGender" name="patientGender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="patientEmail">Email *</label>
+              <input type="email" id="patientEmail" name="patientEmail" required placeholder="your@email.com" />
+            </div>
+            <div class="form-group">
+              <label for="patientPhone">Phone Number *</label>
+              <input type="tel" id="patientPhone" name="patientPhone" required placeholder="123-456-7890" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Medical Information -->
+        <fieldset class="form-section">
+          <legend>Medical Information</legend>
+
+          <div class="form-group">
+            <label for="patientBloodType">Blood Type</label>
+            <select id="patientBloodType" name="patientBloodType">
+              <option value="">Select Blood Type</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="patientAllergies">Known Allergies</label>
+            <textarea id="patientAllergies" name="patientAllergies" placeholder="List any known allergies (medications, foods, etc.)"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="patientMedications">Current Medications</label>
+            <textarea id="patientMedications" name="patientMedications" placeholder="List any current medications you are taking"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="patientMedicalHistory">Medical History</label>
+            <textarea id="patientMedicalHistory" name="patientMedicalHistory" placeholder="Describe any chronic conditions or past surgeries"></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Chief Complaint & Symptoms -->
+        <fieldset class="form-section">
+          <legend>Reason for Visit</legend>
+
+          <div class="form-group">
+            <label for="chiefComplaint">Chief Complaint *</label>
+            <textarea id="chiefComplaint" name="chiefComplaint" required placeholder="What is the main reason for your visit?"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="symptoms">Symptoms *</label>
+            <textarea id="symptoms" name="symptoms" required placeholder="Describe your symptoms in detail (onset, duration, severity)"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="duration">Duration of Symptoms *</label>
+            <input type="text" id="duration" name="duration" required placeholder="e.g., 2 days, 1 week" />
+          </div>
+        </fieldset>
+
+        <!-- Appointment Details -->
+        <fieldset class="form-section">
+          <legend>Appointment Details</legend>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="appointmentDate">Preferred Date *</label>
+              <input type="date" id="appointmentDate" name="appointmentDate" required />
+            </div>
+            <div class="form-group">
+              <label for="appointmentTime">Preferred Time *</label>
+              <input type="time" id="appointmentTime" name="appointmentTime" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="appointmentType">Appointment Type *</label>
+            <select id="appointmentType" name="appointmentType" required>
+              <option value="">Select Type</option>
+              <option value="In-Person">In-Person</option>
+              <option value="Telemedicine">Telemedicine</option>
+              <option value="Emergency">Emergency</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <!-- Emergency Contact -->
+        <fieldset class="form-section">
+          <legend>Emergency Contact</legend>
+
+          <div class="form-group">
+            <label for="emergencyContactName">Emergency Contact Name</label>
+            <input type="text" id="emergencyContactName" name="emergencyContactName" placeholder="Name of emergency contact" />
+          </div>
+
+          <div class="form-group">
+            <label for="emergencyContactPhone">Emergency Contact Phone</label>
+            <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone" placeholder="Phone number of emergency contact" />
+          </div>
+        </fieldset>
+
+        <!-- Additional Notes -->
+        <fieldset class="form-section">
+          <legend>Additional Information</legend>
+          <div class="form-group">
+            <label for="additionalNotes">Additional Notes or Concerns</label>
+            <textarea id="additionalNotes" name="additionalNotes" placeholder="Any other information you'd like to share with the doctor"></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="submit" class="button primary submit-btn">Submit Appointment Request</button>
+          <button type="button" class="button secondary cancel-btn" id="cancelBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Online Payment Modal -->
+  <div id="paymentModal" class="modal hidden">
+    <div class="modal-overlay payment-overlay"></div>
+    <div class="modal-content payment-modal">
+      <div class="modal-header">
+        <h2>Online Payment</h2>
+        <button class="close-btn" id="closePaymentModal">&times;</button>
+      </div>
+
+      <div class="payment-summary">
+        <p><strong>Appointment ID:</strong> <span id="paymentAppointmentId"></span></p>
+        <p><strong>Doctor:</strong> <span id="paymentDoctorName"></span></p>
+        <p><strong>Hospital:</strong> <span id="paymentHospitalName"></span></p>
+        <p class="payment-amount">Consultant Fee: Rs. <span id="paymentAmount"></span></p>
+      </div>
+
+      <div class="payment-options">
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="UPI" checked>
+          <span>UPI Payment</span>
+        </label>
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="Card">
+          <span>Credit / Debit Card</span>
+        </label>
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="Net Banking">
+          <span>Net Banking</span>
+        </label>
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="Wallet">
+          <span>Mobile Wallet</span>
+        </label>
+      </div>
+
+      <div class="payment-method-panel" id="upiPanel">
+        <h3>Scan UPI QR</h3>
+        <div class="qr-scanner" aria-label="Demo UPI scanner QR code">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <p>Scan this demo QR code with any UPI app to pay the consultant fee.</p>
+        <label for="upiId">Or enter UPI ID</label>
+        <input id="upiId" type="text" placeholder="name@upi">
+      </div>
+
+      <div class="payment-method-panel hidden" id="cardPanel">
+        <h3>Credit / Debit Card Details</h3>
+        <label for="cardName">Cardholder Name</label>
+        <input id="cardName" type="text" placeholder="Name on card">
+        <label for="cardNumber">Card Number</label>
+        <input id="cardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456">
+        <div class="payment-field-row">
+          <div>
+            <label for="cardExpiry">Expiry</label>
+            <input id="cardExpiry" type="text" placeholder="MM/YY">
+          </div>
+          <div>
+            <label for="cardCvv">CVV</label>
+            <input id="cardCvv" type="password" inputmode="numeric" maxlength="4" placeholder="123">
+          </div>
+        </div>
+      </div>
+
+      <div class="payment-method-panel hidden" id="netBankingPanel">
+        <h3>Net Banking Details</h3>
+        <label for="bankName">Select Bank</label>
+        <select id="bankName">
+          <option value="">Choose your bank</option>
+          <option value="State Bank of India">State Bank of India</option>
+          <option value="Indian Bank">Indian Bank</option>
+          <option value="HDFC Bank">HDFC Bank</option>
+          <option value="ICICI Bank">ICICI Bank</option>
+          <option value="Axis Bank">Axis Bank</option>
+        </select>
+        <label for="bankUserId">Customer ID / User ID</label>
+        <input id="bankUserId" type="text" placeholder="Enter customer ID">
+      </div>
+
+      <div class="payment-method-panel hidden" id="walletPanel">
+        <h3>Wallet Payment</h3>
+        <div class="wallet-balance">
+          <span>Available Wallet Balance</span>
+          <strong>Rs. <span id="walletBalance">2500</span></strong>
+        </div>
+        <p id="walletMessage">Your wallet has enough balance to proceed with this payment.</p>
+      </div>
+
+      <div class="payment-actions">
+        <button class="button primary" id="payNowButton" type="button">Pay Consultant Fee</button>
+        <button class="button secondary" id="payLaterButton" type="button">Pay Later at Hospital</button>
+      </div>
+
+      <p class="payment-status" id="paymentStatus" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const bookButtons = document.querySelectorAll('.book-doctor');
+      const modal = document.getElementById('patientModal');
+      const closeModalBtn = document.getElementById('closeModal');
+      const cancelBtn = document.getElementById('cancelBtn');
+      const patientForm = document.getElementById('patientForm');
+      const modalOverlay = document.querySelector('.modal-overlay');
+      const paymentModal = document.getElementById('paymentModal');
+      const closePaymentModalBtn = document.getElementById('closePaymentModal');
+      const paymentStatus = document.getElementById('paymentStatus');
+      const payNowButton = document.getElementById('payNowButton');
+      const payLaterButton = document.getElementById('payLaterButton');
+      const paymentMethodInputs = document.querySelectorAll('input[name="paymentMethod"]');
+      const paymentPanels = {
+        UPI: document.getElementById('upiPanel'),
+        Card: document.getElementById('cardPanel'),
+        'Net Banking': document.getElementById('netBankingPanel'),
+        Wallet: document.getElementById('walletPanel'),
+      };
+      const walletBalance = 2500;
+      const appointmentStorageKey = 'doctorAppointmentRequests';
+      let pendingPaymentAppointmentId = null;
+      let pendingPaymentAmount = 0;
+
+      // Open modal with selected doctor info
+      bookButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const doctorCard = e.target.closest('.doctor-card');
+          const doctorName = doctorCard.dataset.doctorName;
+          const doctorSpecialty = doctorCard.dataset.doctorSpecialty;
+          const hospitalName = doctorCard.dataset.hospitalName;
+          const consultationFee = doctorCard.dataset.consultationFee;
+
+          document.getElementById('selectedDoctorName').textContent = doctorName;
+          document.getElementById('selectedDoctorSpecialty').textContent = doctorSpecialty;
+          document.getElementById('selectedHospitalName').textContent = hospitalName;
+          document.getElementById('selectedConsultationFee').textContent = consultationFee;
+          patientForm.dataset.hospitalId = doctorCard.dataset.hospitalId;
+          patientForm.dataset.consultationFee = consultationFee;
+
+          modal.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      // Close modal functions
+      const closeModal = () => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      };
+
+      const closePaymentModal = () => {
+        paymentModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+        pendingPaymentAppointmentId = null;
+      };
+
+      const showPaymentModal = (appointment) => {
+        pendingPaymentAppointmentId = appointment.id;
+        pendingPaymentAmount = Number(appointment.consultationFee || 0);
+        document.getElementById('paymentAppointmentId').textContent = appointment.id;
+        document.getElementById('paymentDoctorName').textContent = appointment.doctorName;
+        document.getElementById('paymentHospitalName').textContent = appointment.hospitalName;
+        document.getElementById('paymentAmount').textContent = appointment.consultationFee;
+        document.getElementById('walletBalance').textContent = walletBalance;
+        document.getElementById('walletMessage').textContent = walletBalance >= pendingPaymentAmount
+          ? 'Your wallet has enough balance to proceed with this payment.'
+          : 'Your wallet balance is low. Choose another payment method.';
+        paymentStatus.textContent = 'Choose an online payment option to complete the consultant fee payment.';
+        paymentModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      };
+
+      const showPaymentPanel = (method) => {
+        Object.values(paymentPanels).forEach((panel) => panel.classList.add('hidden'));
+        paymentPanels[method].classList.remove('hidden');
+        payNowButton.textContent = method === 'Wallet' ? 'Proceed with Wallet Payment' : 'Pay Consultant Fee';
+      };
+
+      const updatePaymentStatus = (paymentStatusValue, paymentMethod) => {
+        if (!pendingPaymentAppointmentId) {
+          return;
+        }
+
+        const savedAppointments = JSON.parse(localStorage.getItem(appointmentStorageKey) || '[]');
+        const updatedAppointments = savedAppointments.map((appointment) => {
+          if (appointment.id !== pendingPaymentAppointmentId) {
+            return appointment;
+          }
+
+          return {
+            ...appointment,
+            paymentStatus: paymentStatusValue,
+            paymentMethod,
+            paidAt: paymentStatusValue === 'Paid' ? new Date().toISOString() : '',
+          };
+        });
+
+        localStorage.setItem(appointmentStorageKey, JSON.stringify(updatedAppointments));
+      };
+
+      closeModalBtn.addEventListener('click', closeModal);
+      cancelBtn.addEventListener('click', closeModal);
+      modalOverlay.addEventListener('click', closeModal);
+      closePaymentModalBtn.addEventListener('click', closePaymentModal);
+      document.querySelector('.payment-overlay').addEventListener('click', closePaymentModal);
+
+      payNowButton.addEventListener('click', () => {
+        const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+        if (selectedPaymentMethod === 'Wallet' && walletBalance < pendingPaymentAmount) {
+          paymentStatus.textContent = 'Wallet balance is not enough. Please choose UPI, card, or net banking.';
+          return;
+        }
+
+        updatePaymentStatus('Paid', selectedPaymentMethod);
+        paymentStatus.textContent = `Payment successful through ${selectedPaymentMethod}. Your appointment request and consultant fee are recorded.`;
+      });
+
+      payLaterButton.addEventListener('click', () => {
+        updatePaymentStatus('Pay at Hospital', 'Offline');
+        paymentStatus.textContent = 'Appointment request saved. Consultant fee will be collected at the hospital.';
+      });
+
+      paymentMethodInputs.forEach((input) => {
+        input.addEventListener('change', () => {
+          showPaymentPanel(input.value);
+          paymentStatus.textContent = `Complete the ${input.value} details to continue.`;
+        });
+      });
+
+      // Handle form submission
+      patientForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Collect form data
+        const formData = new FormData(patientForm);
+        const data = Object.fromEntries(formData);
+
+        const appointment = {
+          id: `APT-${Date.now()}`,
+          status: 'New',
+          createdAt: new Date().toISOString(),
+          hospitalId: patientForm.dataset.hospitalId,
+          hospitalName: document.getElementById('selectedHospitalName').textContent,
+          doctorName: document.getElementById('selectedDoctorName').textContent,
+          doctorSpecialty: document.getElementById('selectedDoctorSpecialty').textContent,
+          consultationFee: patientForm.dataset.consultationFee,
+          paymentStatus: 'Payment Pending',
+          paymentMethod: '',
+          paidAt: '',
+          ...data,
+        };
+
+        const savedAppointments = JSON.parse(localStorage.getItem(appointmentStorageKey) || '[]');
+        savedAppointments.unshift(appointment);
+        localStorage.setItem(appointmentStorageKey, JSON.stringify(savedAppointments));
+
+        // Log data to console (for demonstration)
+        console.log('Patient Details Submitted:', appointment);
+
+        // Reset form, close patient modal, and show payment options
+        patientForm.reset();
+        closeModal();
+        showPaymentModal(appointment);
+      });
+    });
+  </script>
+</body>
+</html>

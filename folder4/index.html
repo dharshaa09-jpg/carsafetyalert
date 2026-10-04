@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient Near Us - Reception Desk</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: #0f1b2d;
+      --panel-2: #13233a;
+      --text: #e6edf7;
+      --muted: #95a7bd;
+      --accent: #38bdf8;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border: rgba(149, 167, 189, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(rgba(6, 16, 29, 0.36), rgba(10, 21, 36, 0.48)),
+        url("https://images.unsplash.com/photo-1504813184591-01572f98c85f?auto=format&fit=crop&w=1800&q=80") center/cover fixed;
+      color: var(--text);
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0;
+    }
+
+    .site-corner-logo {
+      position: fixed;
+      top: 20px;
+      left: 24px;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 2px solid rgba(56, 189, 248, 0.55);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+    }
+
+    .site-corner-logo span {
+      color: #07111f;
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .site-corner-logo .logo {
+      width: 58px;
+      height: 58px;
+      background: #38bdf8;
+      color: #07111f;
+      border-radius: 50%;
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.35);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 1.25rem;
+    }
+
+    .doctor-logo svg {
+      width: 30px;
+      height: 30px;
+      stroke: currentColor;
+    }
+
+    .hospital-image {
+      position: relative;
+      min-height: 220px;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: #081322;
+    }
+
+    .hospital-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 220px;
+      object-fit: cover;
+    }
+
+    .hospital-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 30%, rgba(7, 17, 31, 0.7));
+    }
+
+    .hospital-image-caption {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 16px;
+      z-index: 1;
+      color: white;
+      font-weight: 900;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    .brand h1 {
+      margin-bottom: 4px;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+    }
+
+    .brand p,
+    .muted {
+      color: var(--muted);
+    }
+
+    .panel {
+      padding: 24px;
+      border-radius: 18px;
+      background: rgba(15, 27, 45, 0.82);
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(10px);
+    }
+
+    .login-screen {
+      min-height: calc(100vh - 56px);
+      display: grid;
+      place-items: center;
+    }
+
+    .login-card {
+      width: min(440px, 100%);
+      display: grid;
+      gap: 18px;
+    }
+
+    .login-card form {
+      display: grid;
+      gap: 14px;
+    }
+
+    label {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    input,
+    select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 13px;
+      background: #081322;
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: rgba(56, 189, 248, 0.65);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.14);
+    }
+
+    .button {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      background: var(--accent);
+      color: #03101d;
+    }
+
+    .button.secondary {
+      background: rgba(149, 167, 189, 0.14);
+      color: var(--text);
+    }
+
+    .dashboard.hidden,
+    .login-screen.hidden {
+      display: none;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .stat-card {
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(19, 35, 58, 0.82);
+      border: 1px solid var(--border);
+    }
+
+    .stat-card span {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .stat-card strong {
+      font-size: 1.8rem;
+      color: var(--accent);
+    }
+
+    .appointments {
+      display: grid;
+      gap: 14px;
+    }
+
+    .appointment-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(8, 19, 34, 0.72);
+      border: 1px solid var(--border);
+    }
+
+    .appointment-main {
+      display: grid;
+      gap: 12px;
+    }
+
+    .appointment-title {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .appointment-title h3 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 28px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .badge.new {
+      background: rgba(56, 189, 248, 0.16);
+      color: #bae6fd;
+    }
+
+    .badge.confirmed {
+      background: rgba(34, 197, 94, 0.15);
+      color: #bbf7d0;
+    }
+
+    .badge.waiting {
+      background: rgba(245, 158, 11, 0.16);
+      color: #fde68a;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .detail {
+      display: grid;
+      gap: 4px;
+    }
+
+    .detail span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .detail strong {
+      overflow-wrap: anywhere;
+    }
+
+    .notes {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .appointment-actions {
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      min-width: 180px;
+    }
+
+    .empty-state {
+      padding: 44px 20px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+    }
+
+    .error {
+      min-height: 20px;
+      color: #fecaca;
+      font-weight: 700;
+    }
+
+    .login-help {
+      display: grid;
+      gap: 8px;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(56, 189, 248, 0.08);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 820px) {
+      .site-corner-logo {
+        position: static;
+        width: min(100% - 32px, 440px);
+        margin: 16px auto 0;
+      }
+
+      .login-screen {
+        min-height: auto;
+        padding: 24px 0;
+      }
+
+      .topbar,
+      .appointment-card {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar,
+      .stats-grid,
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-corner-logo" aria-label="Patient Near Us doctor logo">
+    <span class="logo doctor-logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3a4 4 0 0 0-4 4v1a4 4 0 0 0 8 0V7a4 4 0 0 0-4-4Z" />
+        <path d="M6 21v-2a6 6 0 0 1 12 0v2" />
+        <path d="M9 14h6" />
+        <path d="M12 11v6" />
+      </svg>
+    </span>
+    <span>Patient<br>Near Us</span>
+  </div>
+
+
+  <section class="login-screen" id="loginScreen">
+    <div class="panel login-card">
+      <div class="hospital-image">
+        <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80" alt="Modern hospital building" />
+        <div class="hospital-image-caption">Hospital Reception Dashboard</div>
+      </div>
+
+      <div class="brand">
+        <span class="logo doctor-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a4 4 0 0 0-4 4v1a4 4 0 0 0 8 0V7a4 4 0 0 0-4-4Z" />
+            <path d="M6 21v-2a6 6 0 0 1 12 0v2" />
+            <path d="M9 14h6" />
+            <path d="M12 11v6" />
+          </svg>
+        </span>
+        <div>
+          <h1>Patient Near Us</h1>
+          <p>Hospital receptionist access only. Each hospital sees only its own requests.</p>
+        </div>
+      </div>
+
+      <form id="loginForm">
+        <div>
+          <label for="username">Receptionist ID</label>
+          <input id="username" type="text" autocomplete="username" required placeholder="central" />
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input id="password" type="password" autocomplete="current-password" required placeholder="1234" />
+        </div>
+        <button class="button primary" type="submit">Open Reception Dashboard</button>
+        <div class="error" id="loginError"></div>
+      </form>
+
+      <div class="login-help">
+        <strong>Demo hospital IDs</strong>
+        <span>central, heartcare, cityortho, childcare</span>
+        <span>Password for all: 1234</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="dashboard hidden" id="dashboard">
+    <div class="container">
+      <header class="topbar">
+        <div class="brand">
+          <span class="logo doctor-logo" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3a4 4 0 0 0-4 4v1a4 4 0 0 0 8 0V7a4 4 0 0 0-4-4Z" />
+              <path d="M6 21v-2a6 6 0 0 1 12 0v2" />
+              <path d="M9 14h6" />
+              <path d="M12 11v6" />
+            </svg>
+          </span>
+          <div>
+            <h1>Patient Near Us</h1>
+            <p id="hospitalDashboardLabel">Appointments received from Doctors Near Me booking.</p>
+          </div>
+        </div>
+        <button class="button secondary" id="logoutButton" type="button">Logout</button>
+      </header>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span>Total Requests</span>
+          <strong id="totalCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span>New</span>
+          <strong id="newCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span>Confirmed</span>
+          <strong id="confirmedCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span>Emergency</span>
+          <strong id="emergencyCount">0</strong>
+        </div>
+      </div>
+
+      <main class="panel">
+        <div class="toolbar">
+          <input id="searchInput" type="search" placeholder="Search patient, doctor, phone, symptom..." />
+          <select id="statusFilter">
+            <option value="All">All status</option>
+            <option value="New">New</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Waiting">Waiting</option>
+          </select>
+          <button class="button secondary" id="refreshButton" type="button">Refresh</button>
+        </div>
+
+        <div class="appointments" id="appointmentsList"></div>
+      </main>
+    </div>
+  </section>
+
+  <script>
+    const appointmentStorageKey = 'doctorAppointmentRequests';
+    const sessionKey = 'patientNearUsHospitalSession';
+    const hospitalAccounts = {
+      central: { password: '1234', name: 'Central Hospital' },
+      heartcare: { password: '1234', name: 'Heart Care Clinic' },
+      cityortho: { password: '1234', name: 'City Ortho Center' },
+      childcare: { password: '1234', name: 'Children Care Hospital' },
+    };
+    const doctorHospitalMap = {
+      'Dr. Tamil Selvi': { hospitalId: 'central', hospitalName: 'Central Hospital' },
+      'Dr. Ravi Kumar': { hospitalId: 'heartcare', hospitalName: 'Heart Care Clinic' },
+      'Dr. Anjali Mehta': { hospitalId: 'cityortho', hospitalName: 'City Ortho Center' },
+      'Dr. Brindha': { hospitalId: 'childcare', hospitalName: 'Children Care Hospital' },
+    };
+    const loginScreen = document.getElementById('loginScreen');
+    const dashboard = document.getElementById('dashboard');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+    const logoutButton = document.getElementById('logoutButton');
+    const appointmentsList = document.getElementById('appointmentsList');
+    const searchInput = document.getElementById('searchInput');
+    const statusFilter = document.getElementById('statusFilter');
+    const refreshButton = document.getElementById('refreshButton');
+    const totalCount = document.getElementById('totalCount');
+    const newCount = document.getElementById('newCount');
+    const confirmedCount = document.getElementById('confirmedCount');
+    const emergencyCount = document.getElementById('emergencyCount');
+    const hospitalDashboardLabel = document.getElementById('hospitalDashboardLabel');
+    let currentHospital = null;
+
+    function getAppointments() {
+      return JSON.parse(localStorage.getItem(appointmentStorageKey) || '[]').map((appointment) => {
+        if (appointment.hospitalId) {
+          return appointment;
+        }
+
+        const hospital = doctorHospitalMap[appointment.doctorName] || {};
+        return {
+          ...appointment,
+          hospitalId: hospital.hospitalId || 'unknown',
+          hospitalName: hospital.hospitalName || 'Unknown Hospital',
+        };
+      });
+    }
+
+    function saveAppointments(appointments) {
+      localStorage.setItem(appointmentStorageKey, JSON.stringify(appointments));
+    }
+
+    function getHospitalAppointments() {
+      if (!currentHospital) {
+        return [];
+      }
+
+      return getAppointments().filter((appointment) => appointment.hospitalId === currentHospital.id);
+    }
+
+    function showDashboard(hospital) {
+      currentHospital = hospital;
+      hospitalDashboardLabel.textContent = `${hospital.name} appointments only. Other hospitals cannot view these requests.`;
+      loginScreen.classList.add('hidden');
+      dashboard.classList.remove('hidden');
+      renderAppointments();
+    }
+
+    function formatDateTime(appointment) {
+      if (!appointment.appointmentDate && !appointment.appointmentTime) {
+        return 'Not selected';
+      }
+
+      return `${appointment.appointmentDate || ''} ${appointment.appointmentTime || ''}`.trim();
+    }
+
+    function statusClass(status) {
+      return String(status || 'New').toLowerCase();
+    }
+
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function updateStats(appointments) {
+      totalCount.textContent = appointments.length;
+      newCount.textContent = appointments.filter((item) => item.status === 'New').length;
+      confirmedCount.textContent = appointments.filter((item) => item.status === 'Confirmed').length;
+      emergencyCount.textContent = appointments.filter((item) => item.appointmentType === 'Emergency').length;
+    }
+
+    function appointmentMatchesSearch(appointment, searchTerm) {
+      if (!searchTerm) {
+        return true;
+      }
+
+      return [
+        appointment.patientName,
+        appointment.patientPhone,
+        appointment.patientEmail,
+        appointment.hospitalName,
+        appointment.doctorName,
+        appointment.doctorSpecialty,
+        appointment.chiefComplaint,
+        appointment.symptoms,
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase()
+        .includes(searchTerm);
+    }
+
+    function renderAppointments() {
+      const appointments = getHospitalAppointments();
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      const selectedStatus = statusFilter.value;
+      const filteredAppointments = appointments.filter((appointment) => {
+        const matchesStatus = selectedStatus === 'All' || appointment.status === selectedStatus;
+        return matchesStatus && appointmentMatchesSearch(appointment, searchTerm);
+      });
+
+      updateStats(appointments);
+
+      if (filteredAppointments.length === 0) {
+        appointmentsList.innerHTML = '<div class="empty-state">No appointments for this hospital yet. Requests booked for other hospitals are hidden from this dashboard.</div>';
+        return;
+      }
+
+      appointmentsList.innerHTML = filteredAppointments.map((appointment) => `
+        <article class="appointment-card">
+          <div class="appointment-main">
+            <div class="appointment-title">
+              <h3>${escapeHtml(appointment.patientName || 'Unnamed Patient')}</h3>
+              <span class="badge ${statusClass(appointment.status)}">${escapeHtml(appointment.status || 'New')}</span>
+              <span class="badge ${appointment.appointmentType === 'Emergency' ? 'waiting' : 'new'}">${escapeHtml(appointment.appointmentType || 'Appointment')}</span>
+            </div>
+
+            <div class="details-grid">
+              <div class="detail"><span>Hospital</span><strong>${escapeHtml(appointment.hospitalName || '-')}</strong></div>
+              <div class="detail"><span>Doctor</span><strong>${escapeHtml(appointment.doctorName || '-')}</strong></div>
+              <div class="detail"><span>Specialty</span><strong>${escapeHtml(appointment.doctorSpecialty || '-')}</strong></div>
+              <div class="detail"><span>Date & Time</span><strong>${escapeHtml(formatDateTime(appointment))}</strong></div>
+              <div class="detail"><span>Phone</span><strong>${escapeHtml(appointment.patientPhone || '-')}</strong></div>
+              <div class="detail"><span>Email</span><strong>${escapeHtml(appointment.patientEmail || '-')}</strong></div>
+              <div class="detail"><span>Age / Gender</span><strong>${escapeHtml(appointment.patientAge || '-')} / ${escapeHtml(appointment.patientGender || '-')}</strong></div>
+              <div class="detail"><span>Blood Type</span><strong>${escapeHtml(appointment.patientBloodType || '-')}</strong></div>
+              <div class="detail"><span>Duration</span><strong>${escapeHtml(appointment.duration || '-')}</strong></div>
+              <div class="detail"><span>Emergency Contact</span><strong>${escapeHtml(appointment.emergencyContactName || '-')} ${escapeHtml(appointment.emergencyContactPhone || '')}</strong></div>
+              <div class="detail"><span>Consultant Fee</span><strong>Rs. ${escapeHtml(appointment.consultationFee || '-')}</strong></div>
+              <div class="detail"><span>Payment Status</span><strong>${escapeHtml(appointment.paymentStatus || 'Payment Pending')}</strong></div>
+              <div class="detail"><span>Payment Method</span><strong>${escapeHtml(appointment.paymentMethod || '-')}</strong></div>
+            </div>
+
+            <div class="notes">
+              <strong>Complaint:</strong> ${escapeHtml(appointment.chiefComplaint || '-')}<br />
+              <strong>Symptoms:</strong> ${escapeHtml(appointment.symptoms || '-')}<br />
+              <strong>Allergies:</strong> ${escapeHtml(appointment.patientAllergies || '-')}<br />
+              <strong>Current Medications:</strong> ${escapeHtml(appointment.patientMedications || '-')}<br />
+              <strong>Medical History:</strong> ${escapeHtml(appointment.patientMedicalHistory || '-')}<br />
+              <strong>Notes:</strong> ${escapeHtml(appointment.additionalNotes || '-')}
+            </div>
+          </div>
+
+          <div class="appointment-actions">
+            <button class="button primary" type="button" data-action="Confirmed" data-id="${appointment.id}">Confirm</button>
+            <button class="button secondary" type="button" data-action="Waiting" data-id="${appointment.id}">Mark Waiting</button>
+            <button class="button secondary" type="button" data-action="New" data-id="${appointment.id}">Mark New</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function updateAppointmentStatus(id, status) {
+      const appointments = getAppointments().map((appointment) => {
+        if (appointment.id === id && currentHospital && appointment.hospitalId === currentHospital.id) {
+          return { ...appointment, status };
+        }
+
+        return appointment;
+      });
+
+      saveAppointments(appointments);
+      renderAppointments();
+    }
+
+    loginForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const hospital = hospitalAccounts[username];
+
+      if (hospital && hospital.password === password) {
+        const hospitalSession = { id: username, name: hospital.name };
+        sessionStorage.setItem(sessionKey, JSON.stringify(hospitalSession));
+        showDashboard(hospitalSession);
+        return;
+      }
+
+      loginError.textContent = 'Access denied. Use your hospital ID and password.';
+    });
+
+    logoutButton.addEventListener('click', () => {
+      sessionStorage.removeItem(sessionKey);
+      dashboard.classList.add('hidden');
+      loginScreen.classList.remove('hidden');
+      loginForm.reset();
+    });
+
+    appointmentsList.addEventListener('click', (event) => {
+      const button = event.target.closest('button[data-action]');
+      if (!button) {
+        return;
+      }
+
+      updateAppointmentStatus(button.dataset.id, button.dataset.action);
+    });
+
+    searchInput.addEventListener('input', renderAppointments);
+    statusFilter.addEventListener('change', renderAppointments);
+    refreshButton.addEventListener('click', renderAppointments);
+    window.addEventListener('storage', renderAppointments);
+
+    const savedSession = JSON.parse(sessionStorage.getItem(sessionKey) || 'null');
+    if (savedSession && hospitalAccounts[savedSession.id]) {
+      showDashboard(savedSession);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean Rescue Drone System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="app-shell">
+        <header class="app-header">
+            <div class="brand-row">
+                <img src="logo.svg" alt="Ocean Rescue logo" class="brand-logo">
+                <div>
+                    <h1>Ocean Rescue Drone System</h1>
+                    <p>Real-time maritime search and rescue coordination.</p>
+                </div>
+            </div>
+            <button id="emergencyBtn" class="emergency-button"><i class="fa-solid fa-life-ring"></i> Emergency Request</button>
+        </header>
+
+        <main class="dashboard-grid">
+            <section class="card mission-card">
+                <div class="card-header">
+                    <h2>Active Mission</h2>
+                    <span id="missionStatus" class="status status-safe">Monitoring</span>
+                </div>
+                <div class="mission-content">
+                    <div class="mission-summary">
+                        <p><strong>Operation:</strong> Coastal rescue patrol</p>
+                        <p><strong>Target area:</strong> Bay zone Alpha</p>
+                        <p><strong>Last update:</strong> <span id="lastUpdate">--</span></p>
+                    </div>
+                    <div class="controls">
+                        <button id="launchDroneBtn">Launch Drone</button>
+                        <button id="resetBtn" class="secondary">Reset Simulation</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card map-card">
+                <div class="card-header"><h2>Mission Map</h2></div>
+                <div class="map-placeholder">
+                    <div class="map-pin">📍</div>
+                    <div class="map-label">Coastal zone Alpha</div>
+                </div>
+                <p class="map-note">This placeholder can later be replaced with a real map integration (Leaflet, Mapbox, Google Maps).</p>
+            </section>
+
+            <section class="card status-card">
+                <div class="card-header"><h2>Drone Fleet Status</h2></div>
+                <ul id="droneList" class="status-list"></ul>
+            </section>
+
+            <section class="card alert-card">
+                <div class="card-header"><h2>Live Alerts</h2></div>
+                <div id="alertArea" class="alert-area">
+                    <p>No active alerts. All drones are operating normally.</p>
+                </div>
+            </section>
+        </main>
+
+        <section class="info-section">
+            <div class="info-card">
+                <h3>How it works</h3>
+                <p>Manage rescue missions, monitor drone telemetry, and dispatch support when distress signals arrive from the water.</p>
+            </div>
+            <div class="info-card">
+                <h3>Next step</h3>
+                <p>Integrate live GPS, emergency request forms, and a backend API for real mission coordination.</p>
+            </div>
+            <div class="info-card">
+                <h3>Development</h3>
+                <p>Use this app as a starting point for the ocean rescue drone dashboard, then add authentication, mapping, and device telemetry.</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

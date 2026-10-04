@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join the Force - TN Fire Rescue</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="join-page">
+    <header>
+        <nav class="navbar join-navbar">
+            <a href="index.html" class="brand-lockup">
+                <span class="brand-badge">TN</span>
+                <span>
+                    <strong><span>TN</span> FIRE RESCUE</strong>
+                    <small>COURAGE - SERVICE - PROTECTION</small>
+                </span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="training.html">Training</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+
+            <div class="emergency join-emergency">
+                <i class="fa-solid fa-phone"></i>
+                <span>101 / 112</span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="join-main">
+        <section class="join-hero">
+            <div class="join-hero-content">
+                <h1>Join the Force</h1>
+                <p>Be a hero. Save lives. Serve your community.</p>
+            </div>
+        </section>
+
+        <section class="join-card" aria-labelledby="registration-title">
+            <div class="join-card-icon">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <div class="join-card-heading">
+                <h2 id="registration-title">Team Member Registration</h2>
+                <div class="title-divider">
+                    <span></span>
+                    <i class="fa-solid fa-fire"></i>
+                    <span></span>
+                </div>
+                <p>Please enter your details manually to apply for the team.</p>
+            </div>
+
+            <form id="joinForceForm" class="join-form">
+                <div class="form-field">
+                    <label for="fullName">Full Name</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="fullName" name="fullName" required placeholder="Enter full name">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="email" name="email" required placeholder="Enter email address">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="age">Age</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <input type="number" id="age" name="age" min="18" required placeholder="Enter age">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="phone">Phone Number</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-phone"></i>
+                        <input type="tel" id="phone" name="phone" required placeholder="Enter phone number">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="teamId">Team ID</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-id-card"></i>
+                        <input type="text" id="teamId" name="teamId" required placeholder="e.g. TNFR-001">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="emergencyContact">Emergency Contact</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-phone-volume"></i>
+                        <input type="tel" id="emergencyContact" name="emergencyContact" required placeholder="Enter emergency contact number">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="area">Area</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <input type="text" id="area" name="area" required placeholder="e.g. Chennai Central">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="address">Address</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-house"></i>
+                        <input type="text" id="address" name="address" required placeholder="Enter your address">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="station">Station</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <input type="text" id="station" name="station" required placeholder="e.g. Egmore Station">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="joinAs">Join as</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <select id="joinAs" name="joinAs" required>
+                            <option value="">Select Position</option>
+                            <option>Firefighter</option>
+                            <option>Rescue Volunteer</option>
+                            <option>Safety Trainer</option>
+                            <option>Station Support</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="register-button">
+                    <i class="fa-solid fa-users"></i>
+                    Register Team Member
+                </button>
+            </form>
+
+            <div id="formSuccess" class="join-success">
+                <i class="fa-regular fa-circle-check"></i>
+                <span>Logged in successfully!</span>
+            </div>
+
+            <a href="index.html" class="back-home">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Home
+            </a>
+        </section>
+    </main>
+
+    <footer class="join-footer" id="contact">
+        <div class="join-footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="brand-lockup">
+                    <span class="brand-badge">TN</span>
+                    <span>
+                        <strong><span>TN</span> FIRE RESCUE</strong>
+                        <small>COURAGE - SERVICE - PROTECTION</small>
+                    </span>
+                </a>
+            </div>
+
+            <div>
+                <h3>Quick Links</h3>
+                <p>
+                    <a href="index.html">Home</a>
+                    <a href="index.html#services">Services</a>
+                    <a href="training.html">Training</a>
+                    <a href="index.html#contact">Contact</a>
+                </p>
+            </div>
+
+            <div>
+                <h3>Contact Us</h3>
+                <p><i class="fa-solid fa-phone"></i> 101 / 112</p>
+                <p><i class="fa-solid fa-envelope"></i> info@tnfirerescue.com</p>
+                <p><i class="fa-solid fa-location-dot"></i> Chennai, Tamil Nadu, India</p>
+            </div>
+
+            <div>
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <p class="footer-copy">&copy; 2026 TN Fire Rescue. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('joinForceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('formSuccess').classList.add('is-visible');
+        });
+    </script>
+</body>
+</html>

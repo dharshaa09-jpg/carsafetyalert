@@ -1,0 +1,19 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="oceanGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f4f86" />
+      <stop offset="55%" stop-color="#052f55" />
+      <stop offset="100%" stop-color="#02162b" />
+    </linearGradient>
+    <radialGradient id="highlight" cx="50%" cy="20%" r="40%">
+      <stop offset="0%" stop-color="#72d6ff" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#07294f" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#oceanGrad)" />
+  <rect width="1200" height="800" fill="url(#highlight)" />
+  <path d="M0 520C160 460 320 540 480 500C640 460 800 540 960 500C1120 460 1200 520 1200 520V800H0Z" fill="#0c5a94" opacity="0.9" />
+  <path d="M0 580C140 520 280 600 420 560C560 520 700 600 840 560C980 520 1120 600 1200 560V800H0Z" fill="#09437a" opacity="0.85" />
+  <circle cx="960" cy="140" r="72" fill="#71d6ff" opacity="0.12" />
+  <circle cx="180" cy="120" r="48" fill="#92e5ff" opacity="0.12" />
+</svg>
